@@ -14,6 +14,7 @@ import compiler.Lexer.Symbols.Operators.*;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -399,10 +400,10 @@ public class Lexer {
         if(isString()){
             return buildString();
         }
-        return null;
+        throw new InvalidParameterException("There is an unrecognized symbol");
     }
 
-    //
+    /*
     public static void main(String[] args) {
         Lexer lexer = new Lexer(new StringReader("0034 00.013 . fun copyPoints(Point[] p) Point { \n" +
                 "\n" +
@@ -420,5 +421,5 @@ public class Lexer {
             //System.out.println(currentSymbol.getClass());
             //System.out.println(currentSymbol instanceof IdentifierType);
         }while(currentSymbol.getClass() != EndOfInputType.class);
-    }
+    }*/
 }
