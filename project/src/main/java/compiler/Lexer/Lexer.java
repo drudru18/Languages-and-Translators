@@ -169,7 +169,7 @@ public class Lexer {
         return isIdentifierOrKeyword() || isNumeric();
     }
 
-    public Symbol buildIdentifierOrKeyword(){
+    public Symbol buildIdentifierOrKeywordOrRecordIdentifier(){
         StringBuilder valueIdentifierOrKeyword = new StringBuilder();
         do {
             valueIdentifierOrKeyword.append(top());
@@ -185,7 +185,12 @@ public class Lexer {
             catch (Exception e) {throw new RuntimeException();}
         }
         // Else, just return an identifier
-        return new IdentifierType(valueIdentifierOrKeyword.toString());
+        if(valueIdentifierOrKeyword.charAt(0) >= 'A' && valueIdentifierOrKeyword.charAt(0) <= 'Z'){
+            return new RecordIdentifierType(valueIdentifierOrKeyword.toString());
+        }
+        else {
+            return new IdentifierType(valueIdentifierOrKeyword.toString());
+        }
     }
 
     public boolean isFloatWithDotFirst(){
@@ -364,7 +369,7 @@ public class Lexer {
         }
         // IDENTIFIER or KEYWORD
         if(isIdentifierOrKeyword()){
-            return buildIdentifierOrKeyword();
+            return buildIdentifierOrKeywordOrRecordIdentifier();
         }
         // NUMBER
         if(isNumber()){
@@ -405,11 +410,7 @@ public class Lexer {
 
     /*
     public static void main(String[] args) {
-        Lexer lexer = new Lexer(new StringReader("0034 00.013 . fun copyPoints(Point[] p) Point { \n" +
-                "\n" +
-                "    return Point(p[0].x+p[1].x, p[0].y+p[1].y); \n" +
-                "\n" +
-                "} "));
+        Lexer lexer = new Lexer(new StringReader("abc Abc abC"));
         Symbol currentSymbol;
         do{
             currentSymbol = lexer.getNextSymbol();
@@ -421,5 +422,6 @@ public class Lexer {
             //System.out.println(currentSymbol.getClass());
             //System.out.println(currentSymbol instanceof IdentifierType);
         }while(currentSymbol.getClass() != EndOfInputType.class);
-    }*/
+    }
+     */
 }
