@@ -20,53 +20,6 @@ import java.util.Map;
 
 public class Lexer {
 
-    /**
-     * Map<String, Symbol> tokenList;
-     *     public void addSymbol() {
-     *         tokenList = new HashMap<>();
-     *         tokenList.putIfAbsent("free", Symbol.KEYWORD);
-     *         tokenList.putIfAbsent("final", Symbol.KEYWORD);
-     *         tokenList.putIfAbsent("rec", Symbol.KEYWORD);
-     *         tokenList.putIfAbsent("fun", Symbol.KEYWORD);
-     *         tokenList.putIfAbsent("for", Symbol.KEYWORD);
-     *         tokenList.putIfAbsent("while", Symbol.KEYWORD);
-     *         tokenList.putIfAbsent("if", Symbol.KEYWORD);
-     *         tokenList.putIfAbsent("else", Symbol.KEYWORD);
-     *         tokenList.putIfAbsent("return", Symbol.KEYWORD);
-     *         tokenList.putIfAbsent("true", Symbol.KEYWORD);
-     *         tokenList.putIfAbsent("false", Symbol.KEYWORD);
-     *         tokenList.putIfAbsent("string", Symbol.STRING); // immutable
-     *         tokenList.putIfAbsent("int", Symbol.INTEGER);
-     *         tokenList.putIfAbsent("float", Symbol.FLOAT);
-     *         tokenList.putIfAbsent("bool", Symbol.BOOLEAN);
-     *         tokenList.putIfAbsent("+", Symbol.PLUS); // plus for int and float, concatenation for string
-     *         tokenList.putIfAbsent("-", Symbol.MINUS);
-     *         tokenList.putIfAbsent("*", Symbol.MULTIPLY);
-     *         tokenList.putIfAbsent("/", Symbol.DIVIDE);
-     *         tokenList.putIfAbsent("%", Symbol.MODULO); // for int only
-     *  ---       tokenList.putIfAbsent("==", Symbol.EQUAL);
-     *  ---       tokenList.putIfAbsent("!=", Symbol.DIFFERENT);
-     *  ---       tokenList.putIfAbsent("!", Symbol.NOT);
-     *  ---       tokenList.putIfAbsent("&&", Symbol.AND); // for boolean
-     *  ---       tokenList.putIfAbsent("||", Symbol.OR); // for boolean
-     *  ---       tokenList.putIfAbsent("=", Symbol.ASSIGNMENT_OPERATOR);
-     *  ---       tokenList.putIfAbsent("<", Symbol.STRICTLY_LOWER);
-     *  ---       tokenList.putIfAbsent(">", Symbol.STRICTLY_GREATER);
-     *  ---       tokenList.putIfAbsent("<=", Symbol.LOWER_OR_EQUALS);
-     *  ---       tokenList.putIfAbsent(">=", Symbol.GREATER_OR_EQUALS);
-     *         tokenList.putIfAbsent("(", Symbol.LEFT_PARANTHESIS);
-     *         tokenList.putIfAbsent(")", Symbol.RIGHT_PARANTHESIS);
-     *         tokenList.putIfAbsent("{", Symbol.LEFT_BRACE);
-     *         tokenList.putIfAbsent("}", Symbol.RIGHT_BRACE);
-     *         tokenList.putIfAbsent("[", Symbol.LEFT_BRACKET);
-     *         tokenList.putIfAbsent("]", Symbol.RIGHT_BRACKET);
-     *         tokenList.putIfAbsent(";", Symbol.Semicolon);
-     *         tokenList.putIfAbsent(" ", Symbol.SPACE);
-     *         tokenList.putIfAbsent("$", Symbol.COMMENT);
-     *         tokenList.putIfAbsent(".", Symbol.DOT); // for function access
-     *     }
-     */
-
     public int currentInputPosition = 0;
     public String inputString;
 
@@ -407,21 +360,4 @@ public class Lexer {
         }
         throw new InvalidParameterException("There is an unrecognized symbol");
     }
-
-    /*
-    public static void main(String[] args) {
-        Lexer lexer = new Lexer(new StringReader("abc Abc abC"));
-        Symbol currentSymbol;
-        do{
-            currentSymbol = lexer.getNextSymbol();
-            if(currentSymbol == null){
-                System.out.println("Null");
-                break;
-            }
-            System.out.println(currentSymbol);
-            //System.out.println(currentSymbol.getClass());
-            //System.out.println(currentSymbol instanceof IdentifierType);
-        }while(currentSymbol.getClass() != EndOfInputType.class);
-    }
-     */
 }

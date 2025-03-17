@@ -138,8 +138,6 @@ Person rec{
 
 $ Global variables are initialised in the order in which they appear. 
 
-$ Variables always have an initialiser, which can be an expression. 
-
 $ Accessing a variable that is not initialised (for example, by calling a function in the initialiser expression) 
 
 $ a function in the initialiser expression that accesses a global variable before it has been initialised results in undefined behaviour. 
@@ -211,6 +209,10 @@ $ Control structures:
 $ for, while, if/else 
 
 $ Control structures bodies are always block statements. 
+
+$ "If" can be used with an "else" control block or without.
+ 
+$ The "for" control structure takes four arguments : an initialised variable, the initial value of this variable, the maximum value of this variable, and the increment between each loop. It can be an integer, a float, or a double."
 
   
 
