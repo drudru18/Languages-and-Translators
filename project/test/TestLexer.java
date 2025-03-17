@@ -32,12 +32,9 @@ public class TestLexer {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-        Lexer lexer = new Lexer(new StringReader("fun copyPoints(Point[] p) Point { \n" +
+        Lexer lexer = new Lexer(new StringReader("fun square(Int v) Caca[] { \n" +
                 "\n" +
-                "    \n" +
-                "    var x float = 5.34; \n" +
-                "    x == y; \n" +
-                "    return Point(p[0].x+p[1].x, p[0].y+p[1].y); \n" +
+                "    return v*v; \n" +
                 "\n" +
                 "} "));
         Parser parser = new Parser(lexer);

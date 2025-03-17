@@ -68,7 +68,13 @@ public class Parser {
             String paramType = currentSymbol.value;
             char determineType = currentSymbol.value.charAt(0);
 
-            if (determineType >= 97 && determineType <= 122) expect("IDENTIFIER");
+            if (determineType >= 97 && determineType <= 122) {
+                if (currentSymbol.value.equals("int")) expect("INT_TYPE");
+                else if (currentSymbol.type.equals("float")) expect("FLOAT_TYPE");
+                else if (currentSymbol.type.equals("bool")) expect("BOOL_TYPE");
+                else if (currentSymbol.type.equals("string")) expect("STRING_TYPE");
+                else throw new RuntimeException("The type " + currentSymbol.value + " is not supported");
+            }
             else if (determineType >= 65 && determineType <= 90) expect("RECORD_IDENTIFIER");
 
             boolean isArray = false;
@@ -88,8 +94,21 @@ public class Parser {
 
         String returnType = currentSymbol.value;
         char determineType = currentSymbol.value.charAt(0);
-        if (determineType >= 97 && determineType <= 122) expect("IDENTIFIER");
+        if (determineType >= 97 && determineType <= 122) {
+            if (currentSymbol.value.equals("int")) expect("INT_TYPE");
+            else if (currentSymbol.type.equals("float")) expect("FLOAT_TYPE");
+            else if (currentSymbol.type.equals("bool")) expect("BOOL_TYPE");
+            else if (currentSymbol.type.equals("string")) expect("STRING_TYPE");
+            else throw new RuntimeException("The type " + currentSymbol.value + " is not supported");
+        }
         else if (determineType >= 65 && determineType <= 90) expect("RECORD_IDENTIFIER");
+
+        boolean isReturnTypeArray = false;
+        if (currentSymbol.type.equals("LEFT_BRACKET")) {
+            expect("LEFT_BRACKET");
+            expect("RIGHT_BRACKET");
+            isReturnTypeArray = true;
+        }
 
         expect("LEFT_BRACE");
 
@@ -99,7 +118,7 @@ public class Parser {
         }
         expect("RIGHT_BRACE");
 
-        return new FunctionNode(functionName, parameters, returnType, body);
+        return new FunctionNode(functionName, parameters, returnType, body, isReturnTypeArray);
     }
 
     private ReturnNode parseReturnStatement() {

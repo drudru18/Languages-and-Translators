@@ -16,7 +16,7 @@ public class ASTPrinter {
             }
         } else if (node instanceof FunctionNode) {
             FunctionNode fn = (FunctionNode) node;
-            System.out.println("Function: " + fn.name + " returns " + fn.returnType);
+            System.out.println("Function: " + fn.name + " returns " + fn.returnType + (fn.isReturnTypeArray ? "[]" : ""));
             printIndent(indent + 1);
             System.out.println("Parameters:");
             for (ParameterNode param : fn.parameters) {
