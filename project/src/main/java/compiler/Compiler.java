@@ -6,6 +6,10 @@ package compiler;
 import compiler.Lexer.Lexer;
 import compiler.Lexer.Symbol;
 import compiler.Lexer.Symbols.EndOfInputType;
+import compiler.Parser.CFG.ASTNode;
+import compiler.Parser.CFG.ASTPrinter;
+import compiler.Parser.Parser;
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Files;
@@ -14,7 +18,7 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 public class Compiler {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         if(Objects.equals(args[0], "-lexer")){
             String input = args[1];
             try {
@@ -29,6 +33,15 @@ public class Compiler {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        else if(Objects.equals(args[0], "-parser")){
+            String input = args[1];
+            Path filePath = Paths.get(input);
+            String content = Files.readString(filePath);
+            Lexer lexer = new Lexer(new StringReader(content));
+            Parser parser = new Parser(lexer);
+            ASTNode ast = parser.getAST();
+            ASTPrinter.print(ast);
         }
         //return 0;
     }
