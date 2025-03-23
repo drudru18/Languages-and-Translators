@@ -1,8 +1,8 @@
 package compiler.Lexer.Symbols.Keywords.Types;
 
-import compiler.Lexer.Symbols.Keywords.TypeType;
+import compiler.Lexer.Symbols.Keywords.BasicType;
 
-public class StringType extends TypeType {
+public class StringType extends BasicType {
     public static final String STRING_TYPE = "STRING_TYPE";
 
     public StringType() {

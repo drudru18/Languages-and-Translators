@@ -1,8 +1,8 @@
 package compiler.Lexer.Symbols.Keywords.Types;
 
-import compiler.Lexer.Symbols.Keywords.TypeType;
+import compiler.Lexer.Symbols.Keywords.BasicType;
 
-public class IntType extends TypeType {
+public class IntType extends BasicType {
     public static final String INT_TYPE = "INT_TYPE";
 
     public IntType() {

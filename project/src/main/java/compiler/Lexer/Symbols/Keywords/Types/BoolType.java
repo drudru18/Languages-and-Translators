@@ -1,8 +1,8 @@
 package compiler.Lexer.Symbols.Keywords.Types;
 
-import compiler.Lexer.Symbols.Keywords.TypeType;
+import compiler.Lexer.Symbols.Keywords.BasicType;
 
-public class BoolType extends TypeType {
+public class BoolType extends BasicType {
     public static final String BOOL_TYPE = "BOOL_TYPE";
 
     public BoolType() {

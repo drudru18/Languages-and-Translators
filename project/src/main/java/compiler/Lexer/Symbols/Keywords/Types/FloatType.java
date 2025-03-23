@@ -1,8 +1,8 @@
 package compiler.Lexer.Symbols.Keywords.Types;
 
-import compiler.Lexer.Symbols.Keywords.TypeType;
+import compiler.Lexer.Symbols.Keywords.BasicType;
 
-public class FloatType extends TypeType {
+public class FloatType extends BasicType {
     public static final String FLOAT_TYPE = "FLOAT_TYPE";
 
     public FloatType() {
