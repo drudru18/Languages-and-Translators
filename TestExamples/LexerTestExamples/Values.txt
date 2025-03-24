@@ -1,0 +1,4 @@
+a int = -5;
+b float = 3.4;
+c bool = false;
+d string = "heeeee lo";

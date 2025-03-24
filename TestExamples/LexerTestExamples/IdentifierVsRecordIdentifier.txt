@@ -1,0 +1,7 @@
+var int = 3;
+
+Student rec{
+   height float;
+}
+
+var2 Student;

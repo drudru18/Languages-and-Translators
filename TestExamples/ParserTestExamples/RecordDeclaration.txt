@@ -1,0 +1,12 @@
+Student rec {
+   height float;
+   age int;
+   grades int[];
+   name string;
+}
+
+School rec {
+   name string;
+   location string;
+   students Student[];
+}

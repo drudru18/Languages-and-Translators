@@ -1,0 +1,15 @@
+Student rec {
+   height float;
+   age int;
+   grades int[];
+   name string;
+}
+
+fun gradesAverage(student Student) float {
+   sum int = 0;
+   iter int;
+   for(iter, 0, len(student.grades), 1) {
+      sum = sum + student.grades[iter];
+   }
+   return sum / len(student.grades);
+}

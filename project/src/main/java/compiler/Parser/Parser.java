@@ -14,6 +14,7 @@ import compiler.Lexer.Symbols.Numbers.IntegerNumber;
 import compiler.Lexer.Symbols.Operators.*;
 import compiler.Parser.CFG.*;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -249,7 +250,7 @@ public class Parser {
         return node;
     }
 
-    // FunctionCall -> Expression "(" ArgumentList? ")"
+    // FunctionCall -> "(" ArgumentList? ")"
     private ASTNode parseFunctionCall(ASTNode functionNode) {
         expect(LeftParenthesis.class);
         List<ASTNode> arguments = new ArrayList<>();
@@ -449,7 +450,7 @@ public class Parser {
     private ASTNode parseStatement() {
         if (typeEquals(IdentifierType.class)) {
             // Could be a variable declaration, assignment or function call
-            return parseVariableAssignmentOrFunctionCall();
+            return parseVariableDeclarationVariableAssignmentOrFunctionCall();
         }
         else if (typeEquals(IfKeyword.class)) {
             return parseIfStatement();
@@ -474,7 +475,7 @@ public class Parser {
         }
     }
 
-    private ASTNode parseVariableAssignmentOrFunctionCall() {
+    private ASTNode parseVariableDeclarationVariableAssignmentOrFunctionCall() {
         // Read the first identifier
         ASTNode identifier = new IdentifierNode(currentSymbol.value);
         expect(IdentifierType.class);
@@ -707,6 +708,6 @@ public class Parser {
 
 
     public static void main(String[] args) {
-        System.out.println(Integer.class);
+        System.out.println(1);
     }
 }

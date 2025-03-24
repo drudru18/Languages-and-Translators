@@ -1,0 +1,7 @@
+fun main() {
+   arr float[] = array of [3];
+   arr[0] = 0.4;
+   arr[1] = 0.576;
+   arr[2] = .612;
+   free arr;
+}

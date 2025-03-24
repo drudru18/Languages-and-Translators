@@ -21,7 +21,7 @@ public class ForStatementNode extends ASTNode {
         StringBuilder printString = new StringBuilder();
         String indentString = ASTPrinter.getIndent(indent);
         printString.append(indentString).append("ForStatement\n");
-        printString.append(indentString).append("  Variable\n");
+        printString.append(indentString).append("  ForVariable\n");
         printString.append(variable.toStringIndent(indent + 2));
         printString.append(indentString).append("  InitialValue\n");
         printString.append(initialValue.toStringIndent(indent + 2));

@@ -1,0 +1,17 @@
+global bool = false;
+
+fun main() {
+   if(!global){
+      print("Not global");
+   }
+   else if(global){
+      print("Global");
+   }
+   else {
+      print("This case is impossible");
+   }
+   val int = 5;
+   while(val > 0){
+      print("Stille positive");
+   }
+}

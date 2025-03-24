@@ -13,40 +13,31 @@ import java.nio.file.Paths;
 public class TestParser {
 
     @Test
-    public void test0() {
+    public void testFinalVariablesDeclaration() {
         Lexer lexer = new Lexer(new StringReader(
-                "$Good luck\n" +
-                        "\n" +
-                        "final message string = \"Hello\";\n" +
-                        "final run bool = true;\n" +
-                        "\n" +
-                        "Point rec {\n" +
-                        "    x int;\n" +
-                        "    y int;\n" +
+                "final height int = 181;\n" +
+                        "final weight float = 78.57;\n" +
+                        "final isEmpty bool = true;\n" +
+                        "final firstMessage string = \"Hi, how are you ?\";"));
+        Parser parser = new Parser(lexer);
+        ASTNode ast = parser.getAST();
+        ASTPrinter.print(ast);
+    }
+
+    @Test
+    public void testRecordDeclaration() {
+        Lexer lexer = new Lexer(new StringReader(
+                "Student rec {\n" +
+                        "   height float;\n" +
+                        "   age int;\n" +
+                        "   grades int[];\n" +
+                        "   name string;\n" +
                         "}\n" +
                         "\n" +
-                        "a int = 3;\n" +
-                        "\n" +
-                        "fun square(v int) int {\n" +
-                        "    return v*v;\n" +
-                        "}\n" +
-                        "\n" +
-                        "fun main() {\n" +
-                        "    value int = readInt();\n" +
-                        "    p Point = Point(a, a+value);\n" +
-                        "    writeInt(square(value));\n" +
-                        "    writeln();\n" +
-                        "    i int;\n" +
-                        "    for (i, 1, a, 1) {\n" +
-                        "        while (value!=0) {\n" +
-                        "            if (run){\n" +
-                        "                value = value - 1;\n" +
-                        "            } else {\n" +
-                        "                write(message);\n" +
-                        "            }\n" +
-                        "        }\n" +
-                        "    }\n" +
-                        "    i = (i+2)*2;\n" +
+                        "School rec {\n" +
+                        "   name string;\n" +
+                        "   location string;\n" +
+                        "   students Student[];\n" +
                         "}"));
         Parser parser = new Parser(lexer);
         ASTNode ast = parser.getAST();
@@ -54,125 +45,65 @@ public class TestParser {
     }
 
     @Test
-    public void test1() {
+    public void testFunctionDeclarationComplexExpressionsArrayAccessFunctionCall() {
         Lexer lexer = new Lexer(new StringReader(
-                "$ hello world \n"+
-                        "fun main() { \n" +
-                        "\n" +
-                        "    value int = readInt(); \n" +
-                        "\n" +
-                        "    writeln(square(value)); \n" +
-                        "\n" +
-                        "    i int; \n" +
-                        "\n" +
-                        "    for (i, 1, 100, 1) { \n" +
-                        "\n" +
-                        "        while (value!=3) { \n" +
-                        "\n" +
-                        "            if (i > 10){ \n" +
-                        "\n" +
-                        "                $ .... \n" +
-                        "\n" +
-                        "            } else { \n" +
-                        "\n" +
-                        "                $ .... \n" +
-                        "\n" +
-                        "            } \n" +
-                        "\n" +
-                        "        } \n" +
-                        "\n" +
-                        "    } \n" +
-                        "\n" +
-                        "     \n" +
-                        "\n" +
-                        "    i = (i+2)*2; \n" +
-                        "\n" +
-                        "} "));
-        Parser parser = new Parser(lexer);
-        ASTNode ast = parser.getAST();
-        ASTPrinter.print(ast);
-    }
-
-    @Test
-    public void test2() {
-        Lexer lexer = new Lexer(new StringReader(
-                "fun main() {\n" +
-                        "    x int = 10;\n" +
-                        "    \n" +
-                        "    if (x > 5) {\n" +
-                        "        writeln(\"Greater than 5\");\n" +
-                        "    } else {\n" +
-                        "        writeln(\"Less than or equal to 5\");\n" +
-                        "    }\n" +
-                        "}\n"));
-        Parser parser = new Parser(lexer);
-        ASTNode ast = parser.getAST();
-        ASTPrinter.print(ast);
-    }
-
-    @Test
-    public void test3() {
-        Lexer lexer = new Lexer(new StringReader(
-                "fun main() {\n" +
-                        "    score int = readInt();\n" +
-                        "\n" +
-                        "    if (score >= 90) {\n" +
-                        "        writeln(\"Grade: A\");\n" +
-                        "    } else if (score >= 80) {\n" +
-                        "        writeln(\"Grade: B\");\n" +
-                        "    } else if (score >= 70) {\n" +
-                        "        writeln(\"Grade: C\");\n" +
-                        "    } else {\n" +
-                        "        writeln(\"Grade: F\");\n" +
-                        "    }\n" +
-                        "}\n"));
-        Parser parser = new Parser(lexer);
-        ASTNode ast = parser.getAST();
-        ASTPrinter.print(ast);
-    }
-
-    @Test
-    public void test4() {
-        Lexer lexer = new Lexer(new StringReader(
-                "Person rec {\n" +
-                        "    name string;\n" +
-                        "    age int;\n" +
+                "Student rec {\n" +
+                        "   height float;\n" +
+                        "   age int;\n" +
+                        "   grades int[];\n" +
+                        "   name string;\n" +
                         "}\n" +
                         "\n" +
-                        "fun main() {\n" +
-                        "    p Person = Person(\"Alice\", 25);\n" +
-                        "    writeln(p.name);\n" +
-                        "}\n"));
+                        "fun gradesAverage(student Student) float {\n" +
+                        "   sum int = 0;\n" +
+                        "   iter int;\n" +
+                        "   for(iter, 0, len(student.grades), 1) {\n" +
+                        "      sum = sum + student.grades[iter];\n" +
+                        "   }\n" +
+                        "   return sum / len(student.grades);\n" +
+                        "}"));
         Parser parser = new Parser(lexer);
         ASTNode ast = parser.getAST();
         ASTPrinter.print(ast);
     }
 
     @Test
-    public void test5() {
+    public void testIfElseWhileGlobalVar() {
         Lexer lexer = new Lexer(new StringReader(
-                "fun sumArray(arr int[]) int {\n" +
-                        "    total int = 0;\n" +
-                        "    i int;\n" +
-                        "    for (i, 0, len(arr), 1) {\n" +
-                        "        total = total + arr[i];\n" +
-                        "    }\n" +
-                        "    return total;\n" +
-                        "}\n" +
+                "global bool = false;\n" +
                         "\n" +
                         "fun main() {\n" +
-                        "    nums int[] = array of [5];\n" +
-                        "    nums[0] = 10;\n" +
-                        "    nums[1] = 20;\n" +
-                        "    nums[2] = 30;\n" +
-                        "    nums[3] = 40;\n" +
-                        "    nums[4] = 50;\n" +
-                        "\n" +
-                        "    writeln(sumArray(nums));\n" +
-                        "}\n"));
+                        "   if(!global){\n" +
+                        "      print(\"Not global\");\n" +
+                        "   }\n" +
+                        "   else if(global){\n" +
+                        "      print(\"Global\");\n" +
+                        "   }\n" +
+                        "   else {\n" +
+                        "      print(\"This case is impossible\");\n" +
+                        "   }\n" +
+                        "   val int = 5;\n" +
+                        "   while(val > 0){\n" +
+                        "      print(\"Stille positive\");\n" +
+                        "   }\n" +
+                        "}"));
         Parser parser = new Parser(lexer);
         ASTNode ast = parser.getAST();
         ASTPrinter.print(ast);
     }
 
+    @Test
+    public void FreeKeyword() {
+        Lexer lexer = new Lexer(new StringReader(
+                "fun main() {\n" +
+                        "   arr float[] = array of [3];\n" +
+                        "   arr[0] = 0.4;\n" +
+                        "   arr[1] = 0.576;\n" +
+                        "   arr[2] = .612;\n" +
+                        "   free arr;\n" +
+                        "}"));
+        Parser parser = new Parser(lexer);
+        ASTNode ast = parser.getAST();
+        ASTPrinter.print(ast);
+    }
 }

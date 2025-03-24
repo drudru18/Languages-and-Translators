@@ -1,0 +1,4 @@
+final height int = 181;
+final weight float = 78.57;
+final isEmpty bool = true;
+final firstMessage string = "Hi, how are you ?";
