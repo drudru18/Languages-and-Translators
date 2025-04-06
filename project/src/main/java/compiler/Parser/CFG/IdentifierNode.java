@@ -1,10 +1,14 @@
 package compiler.Parser.CFG;
 
 public class IdentifierNode extends ASTNode {
-    public String name;
+    private final String name;
 
     public IdentifierNode(String name) {
         this.name = name;
+    }
+
+    public String getIdentifierName() {
+        return name;
     }
 
     @Override

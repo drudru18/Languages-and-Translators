@@ -3,12 +3,20 @@ package compiler.Parser.CFG;
 import compiler.Lexer.Symbol;
 
 public class TypeNode extends ASTNode {
-    public Symbol type;
-    public boolean isArray;
+    private final Symbol type;
+    private final boolean isArray;
 
     public TypeNode(Symbol type, boolean isArray) {
         this.type = type;
         this.isArray = isArray;
+    }
+
+    public Symbol getTypeNode() {
+        return type;
+    }
+
+    public boolean isArray() {
+        return isArray;
     }
 
     @Override

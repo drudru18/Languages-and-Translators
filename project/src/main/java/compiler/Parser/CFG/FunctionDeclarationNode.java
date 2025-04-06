@@ -3,16 +3,32 @@ package compiler.Parser.CFG;
 import java.util.ArrayList;
 
 public class FunctionDeclarationNode extends ASTNode {
-    String functionName;
-    ArrayList<ParameterNode> parameters;
-    ASTNode returnType;
-    ASTNode functionBody;
+    private final String functionName;
+    private final ArrayList<ParameterNode> parameters;
+    private final ASTNode returnType;
+    private final ASTNode functionBody;
 
     public FunctionDeclarationNode(String functionName, ArrayList<ParameterNode> parameters, ASTNode returnType, ASTNode functionBody) {
         this.functionName = functionName;
         this.parameters = parameters;
         this.returnType = returnType;
         this.functionBody = functionBody;
+    }
+
+    public String getFunctionName() {
+        return functionName;
+    }
+
+    public ArrayList<ParameterNode> getParameters() {
+        return parameters;
+    }
+
+    public ASTNode getReturnType() {
+        return returnType;
+    }
+
+    public ASTNode getFunctionBody() {
+        return functionBody;
     }
 
     @Override

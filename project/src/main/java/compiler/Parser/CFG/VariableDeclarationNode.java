@@ -1,16 +1,32 @@
 package compiler.Parser.CFG;
 
 public class VariableDeclarationNode extends ASTNode {
-    public boolean isFinal;
-    public String varName;
-    public TypeNode typeNode;
-    public ASTNode valueOrIndexNode;
+    private final boolean isFinal;
+    private final String varName;
+    private final TypeNode typeNode;
+    private final ASTNode valueOrIndexNode;
 
     public VariableDeclarationNode(boolean isFinal, String varName, TypeNode typeNode, ASTNode valueOrIndexNode) {
         this.isFinal = isFinal;
         this.varName = varName;
         this.typeNode = typeNode;
         this.valueOrIndexNode = valueOrIndexNode;
+    }
+
+    public boolean isVariableFinal() {
+        return isFinal;
+    }
+
+    public String getVarName() {
+        return varName;
+    }
+
+    public TypeNode getVarType() {
+        return typeNode;
+    }
+
+    public ASTNode getValueOrIndexNode() {
+        return valueOrIndexNode;
     }
 
     @Override
@@ -23,7 +39,7 @@ public class VariableDeclarationNode extends ASTNode {
         printString.append(indentString).append("  Type\n");
         printString.append(typeNode.toStringIndent(indent + 2));
         if (valueOrIndexNode != null) {
-            if (typeNode.isArray) {
+            if (typeNode.isArray()) {
                 printString.append(indentString).append("  Capacity\n");
             }
             else {

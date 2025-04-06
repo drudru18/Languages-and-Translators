@@ -3,12 +3,20 @@ package compiler.Parser.CFG;
 import java.util.List;
 
 public class FunctionCallNode extends ASTNode {
-    public ASTNode functionNode;
-    public List<ASTNode> arguments;
+    private final ASTNode functionNode; // name of the called function
+    private final List<ASTNode> arguments; // the arguments inside it
 
     public FunctionCallNode(ASTNode functionNode, List<ASTNode> arguments) {
         this.functionNode = functionNode;
         this.arguments = arguments;
+    }
+
+    public ASTNode getFunctionNode() {
+        return functionNode;
+    }
+
+    public List<ASTNode> getArguments() {
+        return arguments;
     }
 
     @Override

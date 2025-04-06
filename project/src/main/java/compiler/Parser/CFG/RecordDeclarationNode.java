@@ -3,12 +3,20 @@ package compiler.Parser.CFG;
 import java.util.ArrayList;
 
 public class RecordDeclarationNode extends ASTNode {
-    public String recordName;
-    public ArrayList<VariableDeclarationNode> fields;
+    private final String recordName;
+    private final ArrayList<VariableDeclarationNode> fields;
 
     public RecordDeclarationNode(String recordName, ArrayList<VariableDeclarationNode> fields) {
         this.recordName = recordName;
         this.fields = fields;
+    }
+
+    public String getRecordName() {
+        return recordName;
+    }
+
+    public ArrayList<VariableDeclarationNode> getRecordFields() {
+        return fields;
     }
 
     @Override

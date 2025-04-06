@@ -1,12 +1,20 @@
 package compiler.Parser.CFG;
 
 public class ParameterNode extends ASTNode {
-    String paramName;
-    ASTNode type;
+    private final String paramName;
+    private final ASTNode type;
 
     public ParameterNode(String paramName, ASTNode type) {
         this.paramName = paramName;
         this.type = type;
+    }
+
+    public String getParamName() {
+        return paramName;
+    }
+
+    public ASTNode getParamType() {
+        return type;
     }
 
     @Override

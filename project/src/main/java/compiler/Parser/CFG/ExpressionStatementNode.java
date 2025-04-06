@@ -1,10 +1,14 @@
 package compiler.Parser.CFG;
 
 public class ExpressionStatementNode extends ASTNode {
-    ASTNode expression;
+    private final ASTNode expression;
 
     public ExpressionStatementNode(ASTNode expression) {
         this.expression = expression;
+    }
+
+    public ASTNode getExpression() {
+        return expression;
     }
 
     @Override

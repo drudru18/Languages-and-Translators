@@ -17,7 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
-public class Compiler {
+public class Compiler { /*
     public static void main(String[] args) throws IOException {
         if(Objects.equals(args[0], "-lexer")){
             String input = args[1];
@@ -44,5 +44,5 @@ public class Compiler {
             ASTPrinter.print(ast);
         }
         //return 0;
-    }
+    } */
 }

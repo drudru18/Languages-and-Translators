@@ -1,10 +1,14 @@
 package compiler.Parser.CFG;
 
 public class VariableNode extends ASTNode {
-    public ASTNode variable;
+    private final ASTNode variable;
 
     public VariableNode(ASTNode variable) {
         this.variable = variable;
+    }
+
+    public ASTNode getVariable() {
+        return variable;
     }
 
     @Override

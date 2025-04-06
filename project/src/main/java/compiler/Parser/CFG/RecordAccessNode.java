@@ -1,12 +1,20 @@
 package compiler.Parser.CFG;
 
 public class RecordAccessNode extends ASTNode {
-    public ASTNode recordNode;
-    public String name;
+    private final ASTNode recordNode;
+    private final String name;
 
     public RecordAccessNode(ASTNode recordNode, String name) {
         this.recordNode = recordNode;
         this.name = name;
+    }
+
+    public ASTNode getRecordNode() {
+        return recordNode;
+    }
+
+    public String getRecordName() {
+        return name;
     }
 
     @Override

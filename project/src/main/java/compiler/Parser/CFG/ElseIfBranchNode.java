@@ -3,12 +3,20 @@ package compiler.Parser.CFG;
 import java.util.ArrayList;
 
 public class ElseIfBranchNode extends ASTNode {
-    ASTNode condition;
-    ASTNode block;
+    private final ASTNode condition;
+    private final ASTNode block;
 
     public ElseIfBranchNode(ASTNode condition, ASTNode block) {
         this.condition = condition;
         this.block = block;
+    }
+
+    public ASTNode getCondition() {
+        return condition;
+    }
+
+    public ASTNode getBlock() {
+        return block;
     }
 
     @Override

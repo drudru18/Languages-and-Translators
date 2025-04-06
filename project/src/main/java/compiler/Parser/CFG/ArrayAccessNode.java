@@ -1,12 +1,20 @@
 package compiler.Parser.CFG;
 
 public class ArrayAccessNode extends ASTNode {
-    public ASTNode arrayNode;
-    public ASTNode index;
+    private final ASTNode arrayNode;
+    private final ASTNode index;
 
     public ArrayAccessNode(ASTNode arrayNode, ASTNode index) {
         this.arrayNode = arrayNode;
         this.index = index;
+    }
+
+    public ASTNode getArrayNode() {
+        return arrayNode;
+    }
+
+    public ASTNode getIndex() {
+        return index;
     }
 
     @Override

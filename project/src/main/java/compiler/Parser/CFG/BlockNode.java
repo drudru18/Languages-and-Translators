@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlockNode extends ASTNode {
-    public ArrayList<ASTNode> statements;
+    private final ArrayList<ASTNode> statements;
 
     public BlockNode(ArrayList<ASTNode> statements) {
         this.statements = statements;
+    }
+
+    public ArrayList<ASTNode> getStatements() {
+        return statements;
     }
 
     @Override

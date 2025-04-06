@@ -1,12 +1,20 @@
 package compiler.Parser.CFG;
 
 public class WhileStatementNode extends ASTNode {
-    public ASTNode condition;
-    public ASTNode body;
+    private final ASTNode condition;
+    private final ASTNode body;
 
     public WhileStatementNode(ASTNode condition, ASTNode body) {
         this.condition = condition;
         this.body = body;
+    }
+
+    public ASTNode getWhileCondition() {
+        return condition;
+    }
+
+    public ASTNode getWhileBody() {
+        return body;
     }
 
     @Override

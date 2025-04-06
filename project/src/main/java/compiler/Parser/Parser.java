@@ -14,7 +14,6 @@ import compiler.Lexer.Symbols.Numbers.IntegerNumber;
 import compiler.Lexer.Symbols.Operators.*;
 import compiler.Parser.CFG.*;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -331,7 +330,7 @@ public class Parser {
 
         // Expect type
         TypeNode typeNode = parseType();
-        if (isFinal && typeNode.type instanceof IdentifierType) {
+        if (isFinal && typeNode.getTypeNode() instanceof IdentifierType) {
             throw new RuntimeException("Final variable cannot have record type");
         }
 
@@ -339,13 +338,13 @@ public class Parser {
         ASTNode initializer = null;
         if (typeEquals(Assignment.class)) {
             expect(Assignment.class);
-            if (typeNode.isArray) {
+            if (typeNode.isArray()) {
                 expect(ArrayKeyword.class);
                 expect(OfKeyword.class);
                 expect(LeftBracket.class);
             }
             initializer = parseExpression();
-            if (typeNode.isArray) {
+            if (typeNode.isArray()) {
                 expect(RightBracket.class);
             }
         }
@@ -703,11 +702,5 @@ public class Parser {
         expect(Semicolon.class);
 
         return new DeallocationNode(node);
-    }
-
-
-
-    public static void main(String[] args) {
-        System.out.println(1);
     }
 }
