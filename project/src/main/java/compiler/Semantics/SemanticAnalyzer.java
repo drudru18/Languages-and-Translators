@@ -46,7 +46,42 @@ public class SemanticAnalyzer {
         getAllVariables(functionNode.getFunctionBody());
         analyzeBlock(functionNode.getFunctionBody());
 
+        checkReturnTypes(functionNode);
+
         variables.exitScope();
+    }
+
+    private void checkReturnTypes(FunctionDeclarationNode functionNode) {
+        String expectedReturnType = ((TypeNode) functionNode.getReturnType()).getTypeNode().type;
+        List<ReturnStatementNode> returns = collectReturnStatements(functionNode.getFunctionBody());
+
+        for (ReturnStatementNode ret : returns) {
+            Symbol result = analyzeExpression(ret.getReturnValue());
+            expectType(result.type, expectedReturnType);
+        }
+    }
+
+    private List<ReturnStatementNode> collectReturnStatements(ASTNode node) {
+        List<ReturnStatementNode> result = new ArrayList<>();
+
+        if (node instanceof ReturnStatementNode) {
+            result.add((ReturnStatementNode) node);
+        } else if (node instanceof BlockNode) {
+            for (ASTNode stmt : ((BlockNode) node).getStatements()) {
+                result.addAll(collectReturnStatements(stmt));
+            }
+        } else if (node instanceof IfStatementNode) {
+            result.addAll(collectReturnStatements(((IfStatementNode) node).getIfBlock()));
+            if (((IfStatementNode) node).getElseBlock() != null) {
+                result.addAll(collectReturnStatements(((IfStatementNode) node).getElseBlock()));
+            }
+        } else if (node instanceof WhileStatementNode) {
+            result.addAll(collectReturnStatements(((WhileStatementNode) node).getWhileBody()));
+        } else if (node instanceof ForStatementNode) {
+            result.addAll(collectReturnStatements(((ForStatementNode) node).getBody()));
+        }
+
+        return result;
     }
 
     private void getAllVariables(ASTNode blockNode) {
@@ -123,6 +158,7 @@ public class SemanticAnalyzer {
                 case "INTEGER_NUMBER": return new Symbol("INT_TYPE", null);
                 case "FLOAT_NUMBER": return new Symbol("FLOAT_TYPE", null);
                 case "BOOL_TYPE": return new Symbol("BOOL_TYPE", null);
+                case "STRING_TYPE": return new Symbol("STRING_TYPE", null);
             }
         } else if (e instanceof IdentifierNode) {
             String name = ((IdentifierNode) e).getIdentifierName();
