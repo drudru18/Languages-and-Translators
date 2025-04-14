@@ -1,14 +1,10 @@
 package compiler.Parser.CFG;
 
 public class ReturnStatementNode extends ASTNode {
-    private final ASTNode value;
+    public ASTNode value;
 
     public ReturnStatementNode(ASTNode value) {
         this.value = value;
-    }
-
-    public ASTNode getReturnValue() {
-        return value;
     }
 
     @Override

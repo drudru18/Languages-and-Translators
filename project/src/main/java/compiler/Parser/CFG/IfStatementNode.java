@@ -3,32 +3,16 @@ package compiler.Parser.CFG;
 import java.util.ArrayList;
 
 public class IfStatementNode extends ASTNode {
-    private final ASTNode condition;
-    private final ASTNode ifBlock;
-    private final ArrayList<ElseIfBranchNode> elseIfBranches;
-    private final ASTNode elseBlock;
+    public ASTNode condition;
+    public ASTNode ifBlock;
+    public ArrayList<ElseIfBranchNode> elseIfBranches;
+    public ASTNode elseBlock;
 
     public IfStatementNode(ASTNode condition, ASTNode ifBlock, ArrayList<ElseIfBranchNode> elseIfBranches, ASTNode elseBlock) {
         this.condition = condition;
         this.ifBlock = ifBlock;
         this.elseIfBranches = elseIfBranches;
         this.elseBlock = elseBlock;
-    }
-
-    public ASTNode getCondition() {
-        return condition;
-    }
-
-    public ASTNode getIfBlock() {
-        return ifBlock;
-    }
-
-    public ArrayList<ElseIfBranchNode> getElseIfBranches() {
-        return elseIfBranches;
-    }
-
-    public ASTNode getElseBlock() {
-        return elseBlock;
     }
 
     @Override

@@ -1,14 +1,10 @@
 package compiler.Parser.CFG;
 
 public class DeallocationNode extends ASTNode {
-    private final ASTNode variable;
+    public ASTNode variable;
 
     public DeallocationNode(ASTNode variable) {
         this.variable = variable;
-    }
-
-    public ASTNode getVariable() {
-        return variable;
     }
 
     @Override

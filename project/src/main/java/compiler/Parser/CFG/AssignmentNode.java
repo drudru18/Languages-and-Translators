@@ -1,20 +1,12 @@
 package compiler.Parser.CFG;
 
 public class AssignmentNode extends ASTNode {
-    private final ASTNode left;
-    private final ASTNode right;
+    public ASTNode left;
+    public ASTNode right;
 
     public AssignmentNode(ASTNode left, ASTNode right) {
         this.left = left;
         this.right = right;
-    }
-
-    public ASTNode getLeft() {
-        return left;
-    }
-
-    public ASTNode getRight() {
-        return right;
     }
 
     @Override

@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProgramNode extends ASTNode {
-    private final ArrayList<ASTNode> nodes;
+    public ArrayList<ASTNode> nodes;
 
     public ProgramNode(ArrayList<ASTNode> nodes) {
         this.nodes = nodes;
-    }
-
-    public ArrayList<ASTNode> getProgramNodes() {
-        return nodes;
     }
 
     @Override

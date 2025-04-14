@@ -1,0 +1,35 @@
+fun chr(c int) string {
+    return "";
+}
+
+fun len(s string) int {
+    return 0;
+}
+
+fun floor(n float) int {
+    return 0;
+}
+
+fun readInt() int {
+    return 0;
+}
+
+fun readFloat() float {
+    return 0.0;
+}
+
+fun readString() string {
+    return "";
+}
+
+fun writeInt(n int) {
+}
+
+fun writeFloat(n float) {
+}
+
+fun write(s string) {
+}
+
+fun writeln(s string) {
+}

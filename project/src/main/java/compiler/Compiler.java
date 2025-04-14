@@ -8,7 +8,9 @@ import compiler.Lexer.Symbol;
 import compiler.Lexer.Symbols.EndOfInputType;
 import compiler.Parser.CFG.ASTNode;
 import compiler.Parser.CFG.ASTPrinter;
+import compiler.Parser.CFG.ProgramNode;
 import compiler.Parser.Parser;
+import compiler.Semantic.Semantic;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -17,7 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
-public class Compiler { /*
+public class Compiler {
     public static void main(String[] args) throws IOException {
         if(Objects.equals(args[0], "-lexer")){
             String input = args[1];
@@ -43,6 +45,17 @@ public class Compiler { /*
             ASTNode ast = parser.getAST();
             ASTPrinter.print(ast);
         }
+        else{
+            String input = args[0];
+            Path filePath = Paths.get(input);
+            String content = Files.readString(filePath);
+            Lexer lexer = new Lexer(new StringReader(content));
+            Parser parser = new Parser(lexer);
+            ASTNode ast = parser.getAST();
+            //ASTPrinter.print(ast);
+            Semantic sem = new Semantic((ProgramNode) ast);
+            sem.findSemanticErrors();
+        }
         //return 0;
-    } */
+    }
 }

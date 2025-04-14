@@ -96,14 +96,25 @@ public class TestParser {
     public void FreeKeyword() {
         Lexer lexer = new Lexer(new StringReader(
                 "fun main() {\n" +
-                        "   arr float[] = array of [3];\n" +
-                        "   arr[0] = 0.4;\n" +
-                        "   arr[1] = 0.576;\n" +
-                        "   arr[2] = .612;\n" +
-                        "   free arr;\n" +
+                        "a int[];\n" +
+                        "a = array [5] of int;\n" +
+                        "free a;\n" +
                         "}"));
         Parser parser = new Parser(lexer);
         ASTNode ast = parser.getAST();
         ASTPrinter.print(ast);
     }
+
+    @Test
+    public void t1() {
+        Lexer lexer = new Lexer(new StringReader(
+                "fun main() {\n" +
+                        "a int = 1;\n" +
+                        "a.b.c = 3;\n" +
+                        "}"));
+        Parser parser = new Parser(lexer);
+        ASTNode ast = parser.getAST();
+        ASTPrinter.print(ast);
+    }
+
 }

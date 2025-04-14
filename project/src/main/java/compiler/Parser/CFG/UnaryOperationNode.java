@@ -1,20 +1,12 @@
 package compiler.Parser.CFG;
 
 public class UnaryOperationNode extends ASTNode {
-    private final ASTNode node;
-    private final String operator;
+    public ASTNode node;
+    public String operator;
 
     public UnaryOperationNode(String operator, ASTNode node) {
         this.node = node;
         this.operator = operator;
-    }
-
-    public ASTNode getNode() {
-        return node;
-    }
-
-    public String getOperator() {
-        return operator;
     }
 
     @Override

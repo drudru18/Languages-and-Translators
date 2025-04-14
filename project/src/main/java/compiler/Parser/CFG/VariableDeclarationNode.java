@@ -1,32 +1,16 @@
 package compiler.Parser.CFG;
 
 public class VariableDeclarationNode extends ASTNode {
-    private final boolean isFinal;
-    private final String varName;
-    private final TypeNode typeNode;
-    private final ASTNode valueOrIndexNode;
+    public boolean isFinal;
+    public String varName;
+    public TypeNode typeNode;
+    public ASTNode initializer;
 
-    public VariableDeclarationNode(boolean isFinal, String varName, TypeNode typeNode, ASTNode valueOrIndexNode) {
+    public VariableDeclarationNode(boolean isFinal, String varName, TypeNode typeNode, ASTNode initializer) {
         this.isFinal = isFinal;
         this.varName = varName;
         this.typeNode = typeNode;
-        this.valueOrIndexNode = valueOrIndexNode;
-    }
-
-    public boolean isVariableFinal() {
-        return isFinal;
-    }
-
-    public String getVarName() {
-        return varName;
-    }
-
-    public TypeNode getVarType() {
-        return typeNode;
-    }
-
-    public ASTNode getValueOrIndexNode() {
-        return valueOrIndexNode;
+        this.initializer = initializer;
     }
 
     @Override
@@ -38,14 +22,9 @@ public class VariableDeclarationNode extends ASTNode {
         printString.append(indentString).append("  Name: ").append(varName).append("\n");
         printString.append(indentString).append("  Type\n");
         printString.append(typeNode.toStringIndent(indent + 2));
-        if (valueOrIndexNode != null) {
-            if (typeNode.isArray()) {
-                printString.append(indentString).append("  Capacity\n");
-            }
-            else {
-                printString.append(indentString).append("  InitVal\n");
-            }
-            printString.append(valueOrIndexNode.toStringIndent(indent + 2));
+        if (initializer != null) {
+            printString.append(indentString).append("  InitVal\n");
+            printString.append(initializer.toStringIndent(indent + 2));
         }
         return printString.toString();
     }

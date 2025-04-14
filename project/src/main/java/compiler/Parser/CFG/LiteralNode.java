@@ -3,14 +3,10 @@ package compiler.Parser.CFG;
 import compiler.Lexer.Symbol;
 
 public class LiteralNode extends ASTNode {
-    private final Symbol literal;
+    public Symbol literal;
 
     public LiteralNode(Symbol literal) {
         this.literal = literal;
-    }
-
-    public Symbol getLiteralSymbol() {
-        return literal;
     }
 
     @Override

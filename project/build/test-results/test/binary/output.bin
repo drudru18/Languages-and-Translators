@@ -1,0 +1,224 @@
+Program
+  VariableDeclaration
+    IsFinal: true
+    Name: message
+	    Type
+      TypeValue
+        Type: string
+        IsArray: false
+    InitVal
+      Expression
+%        Literal: STRING_VALUE, Hello
+  VariableDeclaration
+    IsFinal: true
+    Name: run
+	    Type
+      TypeValue
+        Type: bool
+        IsArray: false
+    InitVal
+      Expression
+$        Literal: TRUE_KEYWORD, true
+  RecordDeclaration
+    Name: Point
+    Fields
+      VariableDeclaration
+        IsFinal: false
+        Name: x
+        Type
+          TypeValue
+            Type: int
+            IsArray: false
+      VariableDeclaration
+        IsFinal: false
+        Name: y
+        Type
+          TypeValue
+            Type: int
+            IsArray: false
+  VariableDeclaration
+    IsFinal: false
+    Name: a
+	    Type
+      TypeValue
+        Type: int
+        IsArray: false
+    InitVal
+      Expression
+#        Literal: INTEGER_NUMBER, 3
+  FunctionDeclaration
+    Name: square
+    Parameters
+      Parameter
+        Name: v
+        Type
+          TypeValue
+            Type: int
+            IsArray: false
+    ReturnType
+      TypeValue
+        Type: int
+        IsArray: false
+	    Body
+      Block
+        ReturnStatement
+          Expression
+            BinaryOp: *
+              Left
+                Identifier: v
+              Right
+                Identifier: v
+  FunctionDeclaration
+    Name: main
+    Parameters
+    ReturnType: void
+	    Body
+      Block
+        VariableDeclaration
+          IsFinal: false
+          Name: value
+          Type
+            TypeValue
+              Type: int
+              IsArray: false
+          InitVal
+            Expression
+              FunctionCall
+                Function
+&                  Identifier: readInt
+                Arguments
+        VariableDeclaration
+          IsFinal: false
+          Name: p
+          Type
+            TypeValue
+              Type: Point
+              IsArray: false
+          InitVal
+            Expression
+              FunctionCall
+                Function
+$                  Identifier: Point
+                Arguments
+                  Expression
+"                    Identifier: a
+                  Expression
+                     BinaryOp: +
+                      Left
+&                        Identifier: a
+                      Right
+*                        Identifier: value
+        FunctionCall
+          Function
+!            Identifier: writeInt
+          Arguments
+            Expression
+              FunctionCall
+                Function
+%                  Identifier: square
+                Arguments
+                  Expression
+&                    Identifier: value
+        FunctionCall
+          Function
+             Identifier: writeln
+          Arguments
+            Expression
+&              Literal: STRING_VALUE, 
+        VariableDeclaration
+          IsFinal: false
+          Name: i
+          Type
+            TypeValue
+              Type: int
+              IsArray: false
+        ForStatement
+          ForVariable
+            Identifier: i
+          InitialValue
+            Expression
+)              Literal: INTEGER_NUMBER, 1
+          MaxValue
+            Expression
+              Identifier: a
+          Increment
+            Expression
+)              Literal: INTEGER_NUMBER, 1
+          Body
+            Block
+              WhileStatement
+                Condition
+                  Expression
+!                    BinaryOp: !=
+                      Left
+*                        Identifier: value
+                      Right
+3                        Literal: INTEGER_NUMBER, 0
+                Body
+                  Block
+                     IfStatement
+                       Condition
+#                        Expression
+*                          Identifier: run
+                      IfBlock
+                        Block
+%                          Assignment
+!                            Left
+0                              Identifier: value
+"                            Right
+)                              Expression
+,                                BinaryOp: -
+'                                  Left
+6                                    Identifier: value
+(                                  Right
+?                                    Literal: INTEGER_NUMBER, 1
+                       ElseBlock
+                        Block
+'                          FunctionCall
+%                            Function
+0                              Identifier: write
+&                            Arguments
+)                              Expression
+4                                Identifier: message
+        Assignment
+          Left
+            Identifier: i
+          Right
+            Expression
+              BinaryOp: *
+                Left
+                  Expression
+                     BinaryOp: +
+                      Left
+&                        Identifier: i
+                      Right
+3                        Literal: INTEGER_NUMBER, 2
+                Right
+-                  Literal: INTEGER_NUMBER, 2
+
+FunctionCall
+  Function
+    Identifier: writeInt
+  Arguments
+    Expression
+      FunctionCall
+        Function
+          Identifier: square
+        Arguments
+          Expression
+            Identifier: value
+
+FunctionCall
+  Function
+    Identifier: writeln
+  Arguments
+    Expression
+      Literal: STRING_VALUE, 
+
+FunctionCall
+  Function
+    Identifier: write
+  Arguments
+    Expression
+      Identifier: message
+

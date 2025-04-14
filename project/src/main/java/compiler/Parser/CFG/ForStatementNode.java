@@ -1,11 +1,11 @@
 package compiler.Parser.CFG;
 
 public class ForStatementNode extends ASTNode {
-    private final ASTNode variable;
-    private final ASTNode initialValue;
-    private final ASTNode maxValue;
-    private final ASTNode incrementValue;
-    private final ASTNode body;
+    public ASTNode variable;
+    public ASTNode initialValue;
+    public ASTNode maxValue;
+    public ASTNode incrementValue;
+    public ASTNode body;
 
 
     public ForStatementNode(ASTNode variable, ASTNode initialValue, ASTNode maxValue, ASTNode incrementValue, ASTNode body) {
@@ -14,26 +14,6 @@ public class ForStatementNode extends ASTNode {
         this.maxValue = maxValue;
         this.incrementValue = incrementValue;
         this.body = body;
-    }
-
-    public ASTNode getVariable() {
-        return variable;
-    }
-
-    public ASTNode getInitialValue() {
-        return initialValue;
-    }
-
-    public ASTNode getMaxValue() {
-        return maxValue;
-    }
-
-    public ASTNode getIncrementValue() {
-        return incrementValue;
-    }
-
-    public ASTNode getBody() {
-        return body;
     }
 
     @Override

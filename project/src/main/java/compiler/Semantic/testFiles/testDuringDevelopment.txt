@@ -1,0 +1,105 @@
+Point rec {
+x float[];
+y float;
+}
+
+arr float[] = array of
+p float = Point(1.5, 2.8).y;
+
+
+Point rec {
+x float[];
+y float;
+}
+a Point[] = array [5] of Point;
+
+fun main() {
+a int = 1;
+a + 2 = 3;
+}
+
+
+final v int = 55;
+
+Point rec {
+x int;
+y int;
+}
+
+fun f(p1 Point, p2 Point) Point {
+return Point(p1.x + p2.x, p1.y + p2.y);
+}
+
+fun main() {
+p1 Point = Point(1, 2);
+p2 Point = Point(2, 3);
+f(p1, p2);
+chr(v);
+}
+
+
+
+
+
+i int = 1;
+fun main() {
+i = 2;
+i int = 0;
+i = i + 1;
+{
+i int = 3;
+}
+}
+
+
+
+
+
+
+
+
+
+
+$Good luck
+
+final message string = "Hello";
+final run bool = true;
+
+Point rec {
+    x int;
+    y int;
+}
+
+a int = 3;
+
+fun square(v int) int {
+    return v*v;
+}
+
+fun main() {
+    value int = readInt();
+    p Point = Point(a, a+value);
+    writeInt(square(value));
+    writeln("");
+    i int;
+    for (i, 1, a, 1) {
+        while (value!=0) {
+            if (run){
+                value = value - 1;
+            } else {
+                write(message);
+            }
+        }
+    }
+    i = (i+2)*2;
+}
+
+
+fun f(a int) {
+return 1;
+}
+
+fun main() {
+b int = f();
+}
+

@@ -1,22 +1,15 @@
 package compiler.Parser.CFG;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionCallNode extends ASTNode {
-    private final ASTNode functionNode; // name of the called function
-    private final List<ASTNode> arguments; // the arguments inside it
+    public ASTNode functionNode;
+    public ArrayList<ASTNode> arguments;
 
-    public FunctionCallNode(ASTNode functionNode, List<ASTNode> arguments) {
+    public FunctionCallNode(ASTNode functionNode, ArrayList<ASTNode> arguments) {
         this.functionNode = functionNode;
         this.arguments = arguments;
-    }
-
-    public ASTNode getFunctionNode() {
-        return functionNode;
-    }
-
-    public List<ASTNode> getArguments() {
-        return arguments;
     }
 
     @Override

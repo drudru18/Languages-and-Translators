@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b51d8e3c-d69e-4b91-b8bf-aa4b27351326" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/compiler/Compiler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/compiler/Compiler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/ElseIfBranchNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/ElseIfBranchNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/ExpressionStatementNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/ExpressionStatementNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/FunctionCallNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/FunctionCallNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/FunctionDeclarationNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/FunctionDeclarationNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/IfStatementNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/IfStatementNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/ParameterNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/ParameterNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/RecordDeclarationNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/RecordDeclarationNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/TypeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/TypeNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/VariableDeclarationNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/compiler/Parser/CFG/VariableDeclarationNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/compiler/Parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/compiler/Parser/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/TestParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/TestParser.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="compiler" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2tWjK6rwsaqLSkvGwL0wflODfGV" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.TestLexer.model.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestLexer.test.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestLexer.testDifferentOperators.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestLexer.testIdentifierVsRecordIdentifier.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestLexer.testKeywords.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestLexer.testSomeDelimitersAndOperators.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestLexer.testValues.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestParser.FreeKeyword.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestParser.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestParser.t1.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestParser.test0.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestParser.testFinalVariablesDeclaration.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestParser.testFunctionDeclarationAndComplexExpressions.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestParser.testFunctionDeclarationComplexExpressionsArrayAccessFunctionCall.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestParser.testIfElseWhileGlobalVar.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestParser.testRecordDeclaration.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestSemantic.CheckExpressionTypesOfLiterals.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestSemantic.CheckNotFunction.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestSemantic.CheckRecordConstructor.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestSemantic.FinalVarCantHaveRecordType.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestSemantic.FreeKeyword.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestSemantic.t1.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestSemantic.testArrayAssignment.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestSemantic.testFull.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestSemantic.testIngi.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestSemantic.testIngi2.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestSemantic.testIngi3.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestSemantic.testScopes.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TestSemantic.testTypesInComplesExpressions.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.project [:compiler.Lexer.Lexer.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.project [:compiler.Parser.Parser.main()].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/andrei/Desktop/UCLouvain/Master1/Q2/LINFO2132/Project/individual/Languages-and-Translators/project&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/compiler" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="compiler.Parser.CFG" />
+      <recent name="compiler.Lexer.Symbols" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.TestSemantic.testIngi">
+    <configuration name="TestSemantic.testFull" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestSemantic.testFull&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestSemantic.testIngi" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestSemantic.testIngi&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestSemantic.testIngi2" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestSemantic.testIngi2&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestSemantic.testIngi3" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestSemantic.testIngi3&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestSemantic.testScopes" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestSemantic.testScopes&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="project" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.TestSemantic.testIngi" />
+        <item itemvalue="Gradle.TestSemantic.testIngi3" />
+        <item itemvalue="Gradle.TestSemantic.testIngi2" />
+        <item itemvalue="Gradle.TestSemantic.testScopes" />
+        <item itemvalue="Gradle.TestSemantic.testFull" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b51d8e3c-d69e-4b91-b8bf-aa4b27351326" name="Changes" comment="" />
+      <created>1740474657937</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740474657937</updated>
+      <workItem from="1740474658987" duration="1498000" />
+      <workItem from="1740562329074" duration="5461000" />
+      <workItem from="1740576672320" duration="600000" />
+      <workItem from="1740577286329" duration="54000" />
+      <workItem from="1740577358500" duration="15000" />
+      <workItem from="1740577712286" duration="4637000" />
+      <workItem from="1740608633835" duration="17000" />
+      <workItem from="1740608709176" duration="10000" />
+      <workItem from="1740665768992" duration="1401000" />
+      <workItem from="1740667194709" duration="110000" />
+      <workItem from="1740667370591" duration="29000" />
+      <workItem from="1740683363444" duration="231000" />
+      <workItem from="1740683603626" duration="2684000" />
+      <workItem from="1740756872210" duration="112000" />
+      <workItem from="1741021881134" duration="1029000" />
+      <workItem from="1741797798953" duration="26000" />
+      <workItem from="1742741784957" duration="93000" />
+      <workItem from="1742749544871" duration="336000" />
+      <workItem from="1742749904508" duration="3144000" />
+      <workItem from="1742753369971" duration="4000" />
+      <workItem from="1742813132559" duration="6484000" />
+      <workItem from="1742834216862" duration="276000" />
+      <workItem from="1742834573150" duration="3976000" />
+      <workItem from="1744381713538" duration="3979000" />
+      <workItem from="1744453543171" duration="61990000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

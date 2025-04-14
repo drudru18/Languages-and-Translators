@@ -14,7 +14,9 @@ import compiler.Lexer.Symbols.Numbers.IntegerNumber;
 import compiler.Lexer.Symbols.Operators.*;
 import compiler.Parser.CFG.*;
 
+import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class Parser {
@@ -199,7 +201,8 @@ public class Parser {
         return parsePrimary();
     }
 
-    // Primary -> IntegerLiteral | FloatLiteral | BooleanLiteral | StringLiteral | Identifier | FunctionCall | "(" Expression ")" | ArrayAccess | RecordAccess
+    // Primary -> IntegerLiteral | FloatLiteral | BooleanLiteral | StringLiteral | ArrayLiteral | Identifier | FunctionCall | "(" Expression ")" | ArrayAccess | RecordAccess
+    // ArrayLiteral -> "array" "["Expression"]" "of" Type
     private ASTNode parsePrimary() {
         if (typeEquals(IntegerNumber.class) || typeEquals(FloatNumber.class) ||
                 typeEquals(TrueKeyword.class) || typeEquals(FalseKeyword.class) ||
@@ -207,6 +210,18 @@ public class Parser {
             ASTNode node = new LiteralNode(currentSymbol);
             expect(currentSymbol.getClass());
             return node;
+        }
+
+        // array [Expression] of type
+        if (typeEquals(ArrayKeyword.class)) {
+            ASTNode capacity = null;
+            expect(ArrayKeyword.class);
+            expect(LeftBracket.class);
+            capacity = parseExpression();
+            expect(RightBracket.class);
+            expect(OfKeyword.class);
+            TypeNode arrayType = parseType();
+            return new ArrayLiteralNode(capacity, arrayType);
         }
 
         ASTNode node = null;
@@ -227,7 +242,7 @@ public class Parser {
             throw new RuntimeException("Unexpected token: " + currentSymbol.type);
         }
 
-        // Chained accesses: Array accesses, field accesses
+        // Chained accesses: Array accesses, field accesses and function calls
         while (typeEquals(LeftParenthesis.class) ||
                 typeEquals(LeftBracket.class) ||
                 typeEquals(Dot.class)) {
@@ -252,7 +267,7 @@ public class Parser {
     // FunctionCall -> "(" ArgumentList? ")"
     private ASTNode parseFunctionCall(ASTNode functionNode) {
         expect(LeftParenthesis.class);
-        List<ASTNode> arguments = new ArrayList<>();
+        ArrayList<ASTNode> arguments = new ArrayList<>();
 
         if (!typeEquals(RightParenthesis.class)) {
             arguments.add(parseExpression());
@@ -306,7 +321,7 @@ public class Parser {
             return new TypeNode(varType, false);
         }
 
-        throw new RuntimeException("Expected a type, but found: " + currentSymbol.type);
+        throw new RuntimeException("TypeError");
     }
 
     // Parses a variable declaration that contains info about
@@ -330,23 +345,18 @@ public class Parser {
 
         // Expect type
         TypeNode typeNode = parseType();
-        if (isFinal && typeNode.getTypeNode() instanceof IdentifierType) {
-            throw new RuntimeException("Final variable cannot have record type");
+        // Final variables can't have record type
+        if (isFinal && typeNode.type instanceof RecordIdentifierType) {
+            throw new RuntimeException("TypeError");
         }
 
         // Optional initialization that is value or index of array
         ASTNode initializer = null;
+
+        // Else, initialisation is optional
         if (typeEquals(Assignment.class)) {
             expect(Assignment.class);
-            if (typeNode.isArray()) {
-                expect(ArrayKeyword.class);
-                expect(OfKeyword.class);
-                expect(LeftBracket.class);
-            }
             initializer = parseExpression();
-            if (typeNode.isArray()) {
-                expect(RightBracket.class);
-            }
         }
 
         // Expect semicolon
@@ -605,7 +615,7 @@ public class Parser {
                 left = parseArrayAccess(left);
             }
         }
-        return new VariableNode(left);
+        return left;
     }
 
     private ASTNode parseForStatement() {
@@ -702,5 +712,11 @@ public class Parser {
         expect(Semicolon.class);
 
         return new DeallocationNode(node);
+    }
+
+
+
+    public static void main(String[] args) {
+        System.out.println(1);
     }
 }

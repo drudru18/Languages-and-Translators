@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class TestSemantic</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class TestSemantic</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/default-package.html">default-package</a> &gt; TestSemantic</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.031s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">testIngi</td>
+<td class="success">0.031s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>Program
+  VariableDeclaration
+    IsFinal: true
+    Name: message
+    Type
+      TypeValue
+        Type: string
+        IsArray: false
+    InitVal
+      Expression
+        Literal: STRING_VALUE, Hello
+  VariableDeclaration
+    IsFinal: true
+    Name: run
+    Type
+      TypeValue
+        Type: bool
+        IsArray: false
+    InitVal
+      Expression
+        Literal: TRUE_KEYWORD, true
+  RecordDeclaration
+    Name: Point
+    Fields
+      VariableDeclaration
+        IsFinal: false
+        Name: x
+        Type
+          TypeValue
+            Type: int
+            IsArray: false
+      VariableDeclaration
+        IsFinal: false
+        Name: y
+        Type
+          TypeValue
+            Type: int
+            IsArray: false
+  VariableDeclaration
+    IsFinal: false
+    Name: a
+    Type
+      TypeValue
+        Type: int
+        IsArray: false
+    InitVal
+      Expression
+        Literal: INTEGER_NUMBER, 3
+  FunctionDeclaration
+    Name: square
+    Parameters
+      Parameter
+        Name: v
+        Type
+          TypeValue
+            Type: int
+            IsArray: false
+    ReturnType
+      TypeValue
+        Type: int
+        IsArray: false
+    Body
+      Block
+        ReturnStatement
+          Expression
+            BinaryOp: *
+              Left
+                Identifier: v
+              Right
+                Identifier: v
+  FunctionDeclaration
+    Name: main
+    Parameters
+    ReturnType: void
+    Body
+      Block
+        VariableDeclaration
+          IsFinal: false
+          Name: value
+          Type
+            TypeValue
+              Type: int
+              IsArray: false
+          InitVal
+            Expression
+              FunctionCall
+                Function
+                  Identifier: readInt
+                Arguments
+        VariableDeclaration
+          IsFinal: false
+          Name: p
+          Type
+            TypeValue
+              Type: Point
+              IsArray: false
+          InitVal
+            Expression
+              FunctionCall
+                Function
+                  Identifier: Point
+                Arguments
+                  Expression
+                    Identifier: a
+                  Expression
+                    BinaryOp: +
+                      Left
+                        Identifier: a
+                      Right
+                        Identifier: value
+        FunctionCall
+          Function
+            Identifier: writeInt
+          Arguments
+            Expression
+              FunctionCall
+                Function
+                  Identifier: square
+                Arguments
+                  Expression
+                    Identifier: value
+        FunctionCall
+          Function
+            Identifier: writeln
+          Arguments
+            Expression
+              Literal: STRING_VALUE, 
+        VariableDeclaration
+          IsFinal: false
+          Name: i
+          Type
+            TypeValue
+              Type: int
+              IsArray: false
+        ForStatement
+          ForVariable
+            Identifier: i
+          InitialValue
+            Expression
+              Literal: INTEGER_NUMBER, 1
+          MaxValue
+            Expression
+              Identifier: a
+          Increment
+            Expression
+              Literal: INTEGER_NUMBER, 1
+          Body
+            Block
+              WhileStatement
+                Condition
+                  Expression
+                    BinaryOp: !=
+                      Left
+                        Identifier: value
+                      Right
+                        Literal: INTEGER_NUMBER, 0
+                Body
+                  Block
+                    IfStatement
+                      Condition
+                        Expression
+                          Identifier: run
+                      IfBlock
+                        Block
+                          Assignment
+                            Left
+                              Identifier: value
+                            Right
+                              Expression
+                                BinaryOp: -
+                                  Left
+                                    Identifier: value
+                                  Right
+                                    Literal: INTEGER_NUMBER, 1
+                      ElseBlock
+                        Block
+                          FunctionCall
+                            Function
+                              Identifier: write
+                            Arguments
+                              Expression
+                                Identifier: message
+        Assignment
+          Left
+            Identifier: i
+          Right
+            Expression
+              BinaryOp: *
+                Left
+                  Expression
+                    BinaryOp: +
+                      Left
+                        Identifier: i
+                      Right
+                        Literal: INTEGER_NUMBER, 2
+                Right
+                  Literal: INTEGER_NUMBER, 2
+
+FunctionCall
+  Function
+    Identifier: writeInt
+  Arguments
+    Expression
+      FunctionCall
+        Function
+          Identifier: square
+        Arguments
+          Expression
+            Identifier: value
+
+FunctionCall
+  Function
+    Identifier: writeln
+  Arguments
+    Expression
+      Literal: STRING_VALUE, 
+
+FunctionCall
+  Function
+    Identifier: write
+  Arguments
+    Expression
+      Identifier: message
+
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.8</a> at Apr 15, 2025, 12:02:04 AM</p>
+</div>
+</div>
+</body>
+</html>
