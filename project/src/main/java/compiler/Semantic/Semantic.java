@@ -101,7 +101,7 @@ public class Semantic {
             throw new RuntimeException("ArgumentError");
         }
         for (int i = 0; i < expectedParameters.size(); i++) {
-            expectExpressionToHaveType((ExpressionStatementNode) arguments.get(i), (TypeNode) expectedParameters.get(i).type);
+            expectExpressionToHaveType((ExpressionStatementNode) arguments.get(i), (TypeNode) expectedParameters.get(i).type, "ArgumentError");
         }
     }
 
@@ -110,7 +110,7 @@ public class Semantic {
             throw new RuntimeException("ArgumentError");
         }
         for (int i = 0; i < expectedParameters.size(); i++) {
-            expectExpressionToHaveType((ExpressionStatementNode) arguments.get(i), (TypeNode) expectedParameters.get(i).typeNode);
+            expectExpressionToHaveType((ExpressionStatementNode) arguments.get(i), (TypeNode) expectedParameters.get(i).typeNode, "ArgumentError");
         }
     }
 
@@ -429,6 +429,13 @@ public class Semantic {
         TypeNode expressionType = findTypeOfExpression(node.expression);
         if (!Objects.equals(expressionType, expectedType) && !leftIsFloatAndRightIsInt(expectedType, expressionType)) {
             throw new RuntimeException("TypeError");
+        }
+    }
+
+    public void expectExpressionToHaveType(ExpressionStatementNode node, TypeNode expectedType, String error) {
+        TypeNode expressionType = findTypeOfExpression(node.expression);
+        if (!Objects.equals(expressionType, expectedType) && !leftIsFloatAndRightIsInt(expectedType, expressionType)) {
+            throw new RuntimeException(error);
         }
     }
 

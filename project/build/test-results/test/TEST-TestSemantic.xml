@@ -1,60 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestSemantic" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-04-14T22:02:04" hostname="andrei-VivoBook-S14-X430UA" time="0.031">
+<testsuite name="TestSemantic" tests="1" skipped="0" failures="1" errors="0" timestamp="2025-04-15T11:30:23" hostname="andrei-VivoBook-S14-X430UA" time="0.027">
   <properties/>
-  <testcase name="testIngi" classname="TestSemantic" time="0.031"/>
+  <testcase name="testIngi3" classname="TestSemantic" time="0.027">
+    <failure message="java.lang.RuntimeException: ArgumentError" type="java.lang.RuntimeException">java.lang.RuntimeException: ArgumentError
+	at compiler.Semantic.Semantic.expectExpressionToHaveType(Semantic.java:438)
+	at compiler.Semantic.Semantic.testFunctionCallParameters(Semantic.java:104)
+	at compiler.Semantic.Semantic.findTypeOfVariable(Semantic.java:311)
+	at compiler.Semantic.Semantic.checkBlockNode(Semantic.java:565)
+	at compiler.Semantic.Semantic.checkFunctionDeclaration(Semantic.java:600)
+	at compiler.Semantic.Semantic.programChildrenErrors(Semantic.java:654)
+	at compiler.Semantic.Semantic.findSemanticErrors(Semantic.java:480)
+	at TestSemantic.testIngi3(TestSemantic.java:238)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecutor.runTestClass(JUnitTestClassExecutor.java:112)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecutor.execute(JUnitTestClassExecutor.java:58)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecutor.execute(JUnitTestClassExecutor.java:40)
+	at org.gradle.api.internal.tasks.testing.junit.AbstractJUnitTestClassProcessor.processTestClass(AbstractJUnitTestClassProcessor.java:60)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.processTestClass(SuiteTestClassProcessor.java:52)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:94)
+	at jdk.proxy1/jdk.proxy1.$Proxy2.processTestClass(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$2.run(TestWorker.java:176)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:129)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:100)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:60)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:119)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:66)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+</failure>
+  </testcase>
   <system-out><![CDATA[Program
-  VariableDeclaration
-    IsFinal: true
-    Name: message
-    Type
-      TypeValue
-        Type: string
-        IsArray: false
-    InitVal
-      Expression
-        Literal: STRING_VALUE, Hello
-  VariableDeclaration
-    IsFinal: true
-    Name: run
-    Type
-      TypeValue
-        Type: bool
-        IsArray: false
-    InitVal
-      Expression
-        Literal: TRUE_KEYWORD, true
-  RecordDeclaration
-    Name: Point
-    Fields
-      VariableDeclaration
-        IsFinal: false
-        Name: x
-        Type
-          TypeValue
-            Type: int
-            IsArray: false
-      VariableDeclaration
-        IsFinal: false
-        Name: y
-        Type
-          TypeValue
-            Type: int
-            IsArray: false
-  VariableDeclaration
-    IsFinal: false
-    Name: a
-    Type
-      TypeValue
-        Type: int
-        IsArray: false
-    InitVal
-      Expression
-        Literal: INTEGER_NUMBER, 3
   FunctionDeclaration
-    Name: square
+    Name: f
     Parameters
       Parameter
-        Name: v
+        Name: a
         Type
           TypeValue
             Type: int
@@ -67,164 +74,26 @@
       Block
         ReturnStatement
           Expression
-            BinaryOp: *
-              Left
-                Identifier: v
-              Right
-                Identifier: v
+            Literal: INTEGER_NUMBER, 1
   FunctionDeclaration
     Name: main
     Parameters
     ReturnType: void
     Body
       Block
-        VariableDeclaration
-          IsFinal: false
-          Name: value
-          Type
-            TypeValue
-              Type: int
-              IsArray: false
-          InitVal
-            Expression
-              FunctionCall
-                Function
-                  Identifier: readInt
-                Arguments
-        VariableDeclaration
-          IsFinal: false
-          Name: p
-          Type
-            TypeValue
-              Type: Point
-              IsArray: false
-          InitVal
-            Expression
-              FunctionCall
-                Function
-                  Identifier: Point
-                Arguments
-                  Expression
-                    Identifier: a
-                  Expression
-                    BinaryOp: +
-                      Left
-                        Identifier: a
-                      Right
-                        Identifier: value
         FunctionCall
           Function
-            Identifier: writeInt
+            Identifier: f
           Arguments
             Expression
-              FunctionCall
-                Function
-                  Identifier: square
-                Arguments
-                  Expression
-                    Identifier: value
-        FunctionCall
-          Function
-            Identifier: writeln
-          Arguments
-            Expression
-              Literal: STRING_VALUE, 
-        VariableDeclaration
-          IsFinal: false
-          Name: i
-          Type
-            TypeValue
-              Type: int
-              IsArray: false
-        ForStatement
-          ForVariable
-            Identifier: i
-          InitialValue
-            Expression
-              Literal: INTEGER_NUMBER, 1
-          MaxValue
-            Expression
-              Identifier: a
-          Increment
-            Expression
-              Literal: INTEGER_NUMBER, 1
-          Body
-            Block
-              WhileStatement
-                Condition
-                  Expression
-                    BinaryOp: !=
-                      Left
-                        Identifier: value
-                      Right
-                        Literal: INTEGER_NUMBER, 0
-                Body
-                  Block
-                    IfStatement
-                      Condition
-                        Expression
-                          Identifier: run
-                      IfBlock
-                        Block
-                          Assignment
-                            Left
-                              Identifier: value
-                            Right
-                              Expression
-                                BinaryOp: -
-                                  Left
-                                    Identifier: value
-                                  Right
-                                    Literal: INTEGER_NUMBER, 1
-                      ElseBlock
-                        Block
-                          FunctionCall
-                            Function
-                              Identifier: write
-                            Arguments
-                              Expression
-                                Identifier: message
-        Assignment
-          Left
-            Identifier: i
-          Right
-            Expression
-              BinaryOp: *
-                Left
-                  Expression
-                    BinaryOp: +
-                      Left
-                        Identifier: i
-                      Right
-                        Literal: INTEGER_NUMBER, 2
-                Right
-                  Literal: INTEGER_NUMBER, 2
+              Literal: FLOAT_NUMBER, 1.2
 
 FunctionCall
   Function
-    Identifier: writeInt
+    Identifier: f
   Arguments
     Expression
-      FunctionCall
-        Function
-          Identifier: square
-        Arguments
-          Expression
-            Identifier: value
-
-FunctionCall
-  Function
-    Identifier: writeln
-  Arguments
-    Expression
-      Literal: STRING_VALUE, 
-
-FunctionCall
-  Function
-    Identifier: write
-  Arguments
-    Expression
-      Identifier: message
+      Literal: FLOAT_NUMBER, 1.2
 
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>

@@ -229,7 +229,7 @@ public class TestSemantic {
                         "}\n" +
                         "\n" +
                         "fun main() {\n" +
-                        "f();\n" +
+                        "f(1.2);\n" +
                         "}"));
         Parser parser = new Parser(lexer);
         ASTNode ast = parser.getAST();

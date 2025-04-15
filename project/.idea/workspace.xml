@@ -123,7 +123,7 @@
       <recent name="compiler.Lexer.Symbols" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.TestSemantic.testIngi">
+  <component name="RunManager" selected="Gradle.TestSemantic.testIngi3">
     <configuration name="TestSemantic.testFull" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -259,9 +259,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.TestSemantic.testIngi" />
         <item itemvalue="Gradle.TestSemantic.testIngi3" />
         <item itemvalue="Gradle.TestSemantic.testIngi2" />
+        <item itemvalue="Gradle.TestSemantic.testIngi" />
         <item itemvalue="Gradle.TestSemantic.testScopes" />
         <item itemvalue="Gradle.TestSemantic.testFull" />
       </list>
@@ -308,6 +308,8 @@
       <workItem from="1742834573150" duration="3976000" />
       <workItem from="1744381713538" duration="3979000" />
       <workItem from="1744453543171" duration="61990000" />
+      <workItem from="1744668288941" duration="263000" />
+      <workItem from="1744716373174" duration="770000" />
     </task>
     <servers />
   </component>
