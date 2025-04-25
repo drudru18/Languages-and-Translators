@@ -1,39 +1,0 @@
-Program
-  FunctionDeclaration
-    Name: f
-    Parameters
-      Parameter
-        Name: a
-        Type
-          TypeValue
-            Type: int
-            IsArray: false
-    ReturnType
-      TypeValue
-        Type: int
-        IsArray: false
-	    Body
-      Block
-        ReturnStatement
-          Expression
-'            Literal: INTEGER_NUMBER, 1
-  FunctionDeclaration
-    Name: main
-    Parameters
-    ReturnType: void
-	    Body
-      Block
-        FunctionCall
-          Function
-            Identifier: f
-          Arguments
-            Expression
-)              Literal: FLOAT_NUMBER, 1.2
-
-FunctionCall
-  Function
-    Identifier: f
-  Arguments
-    Expression
-!      Literal: FLOAT_NUMBER, 1.2
-
