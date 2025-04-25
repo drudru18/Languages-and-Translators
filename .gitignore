@@ -1,3 +1,4 @@
 project/.gradle/*
 project/build/*
+project/gradle/*
 project/.idea/*
