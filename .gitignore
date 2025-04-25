@@ -1,2 +1,3 @@
 project/.gradle/*
-project/build/classes
+project/build/*
+project/.idea/*
