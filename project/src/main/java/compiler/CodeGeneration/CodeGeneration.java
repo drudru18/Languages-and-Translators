@@ -1343,8 +1343,298 @@ public class CodeGeneration {
         mv.visitEnd();
     }
 
+    private void codeWriteFunction(ClassWriter cw) {
+        MethodVisitor mv = cw.visitMethod(
+                ACC_PUBLIC | ACC_STATIC,
+                "write",
+                "(Ljava/lang/String;)V",
+                null,
+                null
+        );
+
+        mv.visitCode();
+
+        // Get System.out
+        mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+
+        // Load the string argument (index 0 since it's static method)
+        mv.visitVarInsn(ALOAD, 0);
+
+        // Call PrintStream.print(String)
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(Ljava/lang/String;)V", false);
+
+        // Return
+        mv.visitInsn(RETURN);
+
+        mv.visitMaxs(0, 0);
+        mv.visitEnd();
+
+        cw.visitEnd();
+    }
+
+    private void codeWritelnFunction(ClassWriter cw) {
+        MethodVisitor mv = cw.visitMethod(
+                ACC_PUBLIC | ACC_STATIC,
+                "writeln",
+                "(Ljava/lang/String;)V",
+                null,
+                null
+        );
+
+        mv.visitCode();
+
+        // Get System.out
+        mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+
+        // Load the string argument (index 0 since it's static method)
+        mv.visitVarInsn(ALOAD, 0);
+
+        // Call PrintStream.print(String)
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+
+        // Return
+        mv.visitInsn(RETURN);
+
+        mv.visitMaxs(0, 0);
+        mv.visitEnd();
+
+        cw.visitEnd();
+    }
+
+    private void codeWriteIntFunction(ClassWriter cw) {
+        MethodVisitor mv = cw.visitMethod(
+                ACC_PUBLIC | ACC_STATIC,
+                "writeInt",
+                "(I)V",
+                null,
+                null
+        );
+
+        mv.visitCode();
+
+        // Get System.out
+        mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+
+        // Load the int argument (index 0)
+        mv.visitVarInsn(ILOAD, 0);
+
+        // Call PrintStream.print(int)
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(I)V", false);
+
+        mv.visitInsn(RETURN);
+        mv.visitMaxs(0, 0); // Automatically computed
+        mv.visitEnd();
+
+        cw.visitEnd();
+    }
+
+    private void codeWriteFloatFunction(ClassWriter cw) {
+        MethodVisitor mv = cw.visitMethod(
+                ACC_PUBLIC | ACC_STATIC,
+                "writeFloat",
+                "(F)V",
+                null,
+                null
+        );
+
+        mv.visitCode();
+
+        // Get System.out
+        mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+
+        // Load the int argument (index 0)
+        mv.visitVarInsn(FLOAD, 0);
+
+        // Call PrintStream.print(int)
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(F)V", false);
+
+        mv.visitInsn(RETURN);
+        mv.visitMaxs(0, 0); // Automatically computed
+        mv.visitEnd();
+
+        cw.visitEnd();
+    }
+
+    private void codeLenFunction(ClassWriter cw) {
+        MethodVisitor mv = cw.visitMethod(
+                ACC_PUBLIC | ACC_STATIC,
+                "len",
+                "(Ljava/lang/String;)I", // (String) -> int
+                null,
+                null
+        );
+
+        mv.visitCode();
+
+        // Load the string parameter (index 0)
+        mv.visitVarInsn(ALOAD, 0);
+
+        // Call String.length() -> int
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/String", "length", "()I", false);
+
+        // Return the int result
+        mv.visitInsn(IRETURN);
+
+        mv.visitMaxs(0, 0); // Let ASM calculate stack/local sizes
+        mv.visitEnd();
+
+        cw.visitEnd();
+    }
+
+    private void codeChrFunction(ClassWriter cw) {
+        MethodVisitor mv = cw.visitMethod(
+                ACC_PUBLIC | ACC_STATIC,
+                "chr",
+                "(I)Ljava/lang/String;",
+                null,
+                null
+        );
+
+        mv.visitCode();
+
+        // Load the int parameter (index 0)
+        mv.visitVarInsn(ILOAD, 0);
+
+        // Call Integer.toString(int)
+        mv.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "toString", "(I)Ljava/lang/String;", false);
+
+        // Return the resulting string
+        mv.visitInsn(ARETURN);
+
+        mv.visitMaxs(0, 0);
+        mv.visitEnd();
+
+        cw.visitEnd();
+    }
+
+    private void codeFloorFunction(ClassWriter cw) {
+        MethodVisitor mv = cw.visitMethod(
+                ACC_PUBLIC | ACC_STATIC,
+                "floor",
+                "(F)I", // (float) -> int
+                null,
+                null
+        );
+
+        mv.visitCode();
+
+        // Load the float parameter
+        mv.visitVarInsn(FLOAD, 0);
+
+        // Convert float to double (Math.floor expects double)
+        mv.visitInsn(F2D);
+
+        // Call Math.floor(double)
+        mv.visitMethodInsn(INVOKESTATIC, "java/lang/Math", "floor", "(D)D", false);
+
+        // Convert result back to float
+        mv.visitInsn(D2I);
+
+        // Return float
+        mv.visitInsn(IRETURN);
+
+        mv.visitMaxs(0, 0); // Let ASM compute the stack size
+        mv.visitEnd();
+
+        cw.visitEnd();
+    }
+
+    private void codeReadStringFunction(ClassWriter cw) {
+        // public static String readString()
+        MethodVisitor mv = cw.visitMethod(
+                ACC_PUBLIC | ACC_STATIC,
+                "readString",
+                "()Ljava/lang/String;",
+                null,
+                null
+        );
+
+        mv.visitCode();
+
+        // Create new Scanner
+        mv.visitTypeInsn(NEW, "java/util/Scanner");
+        mv.visitInsn(DUP);
+        mv.visitFieldInsn(GETSTATIC, "java/lang/System", "in", "Ljava/io/InputStream;");
+        mv.visitMethodInsn(INVOKESPECIAL, "java/util/Scanner", "<init>", "(Ljava/io/InputStream;)V", false);
+
+        // Call nextLine on Scanner
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/Scanner", "nextLine", "()Ljava/lang/String;", false);
+
+        // Return the result
+        mv.visitInsn(ARETURN);
+
+        mv.visitMaxs(0, 0); // Let ASM calculate
+        mv.visitEnd();
+    }
+
+    public void codeReadFloatFunction(ClassWriter cw) {
+        // public static String readFloat()
+        MethodVisitor mv = cw.visitMethod(
+                ACC_PUBLIC | ACC_STATIC,
+                "readFloat",
+                "()F",
+                null,
+                null
+        );
+
+        mv.visitCode();
+
+        // Create new Scanner
+        mv.visitTypeInsn(NEW, "java/util/Scanner");
+        mv.visitInsn(DUP);
+        mv.visitFieldInsn(GETSTATIC, "java/lang/System", "in", "Ljava/io/InputStream;");
+        mv.visitMethodInsn(INVOKESPECIAL, "java/util/Scanner", "<init>", "(Ljava/io/InputStream;)V", false);
+
+        // Call nextLine on Scanner
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/Scanner", "nextFloat", "()F", false);
+
+        // Return the result
+        mv.visitInsn(FRETURN);
+
+        mv.visitMaxs(0, 0); // Let ASM calculate
+        mv.visitEnd();
+    }
+
+    public void codeReadIntFunction(ClassWriter cw) {
+        // public static String readFloat()
+        MethodVisitor mv = cw.visitMethod(
+                ACC_PUBLIC | ACC_STATIC,
+                "readInt",
+                "()I",
+                null,
+                null
+        );
+
+        mv.visitCode();
+
+        // Create new Scanner
+        mv.visitTypeInsn(NEW, "java/util/Scanner");
+        mv.visitInsn(DUP);
+        mv.visitFieldInsn(GETSTATIC, "java/lang/System", "in", "Ljava/io/InputStream;");
+        mv.visitMethodInsn(INVOKESPECIAL, "java/util/Scanner", "<init>", "(Ljava/io/InputStream;)V", false);
+
+        // Call nextLine on Scanner
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/Scanner", "nextInt", "()I", false);
+
+        // Return the result
+        mv.visitInsn(IRETURN);
+
+        mv.visitMaxs(0, 0); // Let ASM calculate
+        mv.visitEnd();
+    }
+
     private void codeForMainAndBuiltIn(ClassWriter cw) {
         codeMainEntryPoint(cw);
+        codeWriteFunction(cw);
+        codeWritelnFunction(cw);
+        codeWriteIntFunction(cw);
+        codeWriteFloatFunction(cw);
+        codeLenFunction(cw);
+        codeChrFunction(cw);
+        codeFloorFunction(cw);
+        codeReadStringFunction(cw);
+        codeReadFloatFunction(cw);
+        codeReadIntFunction(cw);
     }
 
     /// Main function (entry point)
