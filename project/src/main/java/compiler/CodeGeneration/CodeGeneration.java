@@ -38,6 +38,12 @@ public class CodeGeneration {
         }
     }
 
+    private static final HashSet<String> flexibleFunctions = new HashSet<>();
+    static {
+        flexibleFunctions.add("write");
+        flexibleFunctions.add("writeln");
+    }
+
     // Be careful to increase and decrease this value when necessary
     private static int currentVarIndex = 0;
 
@@ -281,12 +287,7 @@ public class CodeGeneration {
     }
 
     public void testFunctionCallParameters(ArrayList<ParameterNode> expectedParameters, ArrayList<ASTNode> arguments) {
-        if (expectedParameters.size() != arguments.size()) {
-            throw new RuntimeException("ArgumentError");
-        }
-        for (int i = 0; i < expectedParameters.size(); i++) {
-            expectExpressionToHaveType((ExpressionStatementNode) arguments.get(i), (TypeNode) expectedParameters.get(i).type, "ArgumentError");
-        }
+
     }
 
     public void testConstructorParameters(ArrayList<VariableDeclarationNode> expectedParameters, ArrayList<ASTNode> arguments) {
@@ -857,16 +858,24 @@ public class CodeGeneration {
         }
     }
 
-    private String getFunctionDescriptor(FunctionDeclarationNode node) {
+    private String getFunctionDescriptor(FunctionCallNode node, FunctionDeclarationNode funDecl, boolean isDecl) {
         StringBuilder descriptor = new StringBuilder();
         descriptor.append("(");
-        for (ParameterNode param : node.parameters) {
-            TypeNode paramType = (TypeNode) param.type;
-            descriptor.append(getTypeOfVariableInBytecode(paramType));
+        if (isDecl || !flexibleFunctions.contains(funDecl.functionName)) {
+            for (ParameterNode param : funDecl.parameters) {
+                TypeNode paramType = (TypeNode) param.type;
+                descriptor.append(getTypeOfVariableInBytecode(paramType));
+            }
+        }
+        else {
+            for (ASTNode param : node.arguments) {
+                TypeNode paramType = findTypeOfExpression(param);
+                descriptor.append(getTypeOfVariableInBytecode(paramType));
+            }
         }
         descriptor.append(")");
-        if (node.returnType != null) {
-            descriptor.append(getTypeOfVariableInBytecode((TypeNode)node.returnType));
+        if (funDecl.returnType != null) {
+            descriptor.append(getTypeOfVariableInBytecode((TypeNode)funDecl.returnType));
         }
         else {
             descriptor.append("V");
@@ -882,7 +891,7 @@ public class CodeGeneration {
             convertIntToFloat(mv, (TypeNode) functionDecl.parameters.get(i).type, findTypeOfExpression(exprParam));
             i++;
         }
-        mv.visitMethodInsn(INVOKESTATIC, mainClassName, functionDecl.functionName, getFunctionDescriptor(functionDecl), false);
+        mv.visitMethodInsn(INVOKESTATIC, mainClassName, functionDecl.functionName, getFunctionDescriptor(functionCall, functionDecl, false), false);
     }
 
     private void codeConstructorCall(MethodVisitor mv, FunctionCallNode functionCall, RecordDeclarationNode recDecl) {
@@ -1343,11 +1352,14 @@ public class CodeGeneration {
         mv.visitEnd();
     }
 
-    private void codeWriteFunction(ClassWriter cw) {
+    private void codeWriteFunction(ClassWriter cw, TypeNode inputType) {
+        int loadOp = getTypeToLoadOpcode(inputType);
+        String stringType = getTypeOfVariableInBytecode(inputType);
+
         MethodVisitor mv = cw.visitMethod(
                 ACC_PUBLIC | ACC_STATIC,
                 "write",
-                "(Ljava/lang/String;)V",
+                "(" + stringType + ")V",
                 null,
                 null
         );
@@ -1358,10 +1370,10 @@ public class CodeGeneration {
         mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
 
         // Load the string argument (index 0 since it's static method)
-        mv.visitVarInsn(ALOAD, 0);
+        mv.visitVarInsn(loadOp, 0);
 
         // Call PrintStream.print(String)
-        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(Ljava/lang/String;)V", false);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(" + stringType + ")V", false);
 
         // Return
         mv.visitInsn(RETURN);
@@ -1372,11 +1384,14 @@ public class CodeGeneration {
         cw.visitEnd();
     }
 
-    private void codeWritelnFunction(ClassWriter cw) {
+    private void codeWritelnFunction(ClassWriter cw, TypeNode inputType) {
+        int loadOp = getTypeToLoadOpcode(inputType);
+        String stringType = getTypeOfVariableInBytecode(inputType);
+
         MethodVisitor mv = cw.visitMethod(
                 ACC_PUBLIC | ACC_STATIC,
                 "writeln",
-                "(Ljava/lang/String;)V",
+                "(" + stringType + ")V",
                 null,
                 null
         );
@@ -1387,10 +1402,10 @@ public class CodeGeneration {
         mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
 
         // Load the string argument (index 0 since it's static method)
-        mv.visitVarInsn(ALOAD, 0);
+        mv.visitVarInsn(loadOp, 0);
 
         // Call PrintStream.print(String)
-        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(" + stringType + ")V", false);
 
         // Return
         mv.visitInsn(RETURN);
@@ -1625,8 +1640,14 @@ public class CodeGeneration {
 
     private void codeForMainAndBuiltIn(ClassWriter cw) {
         codeMainEntryPoint(cw);
-        codeWriteFunction(cw);
-        codeWritelnFunction(cw);
+        codeWriteFunction(cw, new TypeNode(new StringType(), false));
+        codeWriteFunction(cw, new TypeNode(new IntType(), false));
+        codeWriteFunction(cw, new TypeNode(new FloatType(), false));
+        codeWriteFunction(cw, new TypeNode(new BoolType(), false));
+        codeWritelnFunction(cw, new TypeNode(new StringType(), false));
+        codeWritelnFunction(cw, new TypeNode(new IntType(), false));
+        codeWritelnFunction(cw, new TypeNode(new FloatType(), false));
+        codeWritelnFunction(cw, new TypeNode(new BoolType(), false));
         codeWriteIntFunction(cw);
         codeWriteFloatFunction(cw);
         codeLenFunction(cw);
@@ -2038,7 +2059,7 @@ public class CodeGeneration {
         currentFunctionReturnedType = null;
 
         // Write code for function declaration
-        MethodVisitor mv = cw.visitMethod(ACC_PUBLIC | ACC_STATIC, node.functionName, getFunctionDescriptor(node), null, null);
+        MethodVisitor mv = cw.visitMethod(ACC_PUBLIC | ACC_STATIC, node.functionName, getFunctionDescriptor(null, node, true), null, null);
         mv.visitCode();
 
         // Add all parameters to scope

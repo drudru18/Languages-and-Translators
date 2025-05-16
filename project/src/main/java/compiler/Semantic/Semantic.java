@@ -25,6 +25,20 @@ import java.util.*;
 
 public class Semantic {
 
+    private static final HashSet<String> flexibleFunctions = new HashSet<>();
+    static {
+        flexibleFunctions.add("write");
+        flexibleFunctions.add("writeln");
+    }
+
+    private static final HashSet<String> primitiveTypes = new HashSet<>();
+    static {
+        primitiveTypes.add("int");
+        primitiveTypes.add("bool");
+        primitiveTypes.add("float");
+        primitiveTypes.add("string");
+    }
+
     public final ProgramNode root;
 
     public Stack<HashMap<String, ASTNode>> scopes;
@@ -96,11 +110,20 @@ public class Semantic {
         }
     }
 
-    public void testFunctionCallParameters(ArrayList<ParameterNode> expectedParameters, ArrayList<ASTNode> arguments) {
+    public void testFunctionCallParameters(ArrayList<ParameterNode> expectedParameters, ArrayList<ASTNode> arguments, FunctionDeclarationNode funcDecl) {
         if (expectedParameters.size() != arguments.size()) {
             throw new RuntimeException("ArgumentError");
         }
         for (int i = 0; i < expectedParameters.size(); i++) {
+            // if the function is flexible (write and writeln)
+            if (flexibleFunctions.contains(funcDecl.functionName)) {
+                // get the type on input
+                TypeNode typeOfInput = findTypeOfExpression(arguments.get(i));
+                // if the type is primitive and not array, don't verify anything
+                if (primitiveTypes.contains(typeOfInput.type.value) && !typeOfInput.isArray) {
+                    return;
+                }
+            }
             expectExpressionToHaveType((ExpressionStatementNode) arguments.get(i), (TypeNode) expectedParameters.get(i).type, "ArgumentError");
         }
     }
@@ -308,7 +331,7 @@ public class Semantic {
             if (typeEquals(meaningFunctionCallNode, FunctionDeclarationNode.class)) {
                 FunctionDeclarationNode functionDeclarationNode = (FunctionDeclarationNode) meaningFunctionCallNode;
                 // Have to check parameters
-                testFunctionCallParameters(functionDeclarationNode.parameters, functionCallNode.arguments);
+                testFunctionCallParameters(functionDeclarationNode.parameters, functionCallNode.arguments, functionDeclarationNode);
                 // Return the return type of the function
                 return functionDeclarationNode.returnType;
             }
