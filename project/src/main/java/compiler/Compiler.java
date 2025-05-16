@@ -3,6 +3,7 @@
  */
 package compiler;
 
+import compiler.CodeGeneration.CodeGeneration;
 import compiler.Lexer.Lexer;
 import compiler.Lexer.Symbol;
 import compiler.Lexer.Symbols.EndOfInputType;
@@ -21,6 +22,7 @@ import java.util.Objects;
 
 public class Compiler {
     public static void main(String[] args) throws IOException {
+        /*
         if(Objects.equals(args[0], "-lexer")){
             String input = args[1];
             try {
@@ -57,5 +59,20 @@ public class Compiler {
             sem.findSemanticErrors();
         }
         //return 0;
+         */
+        String input = args[0];
+        Path filePath = Paths.get(input);
+        String content = Files.readString(filePath);
+        Lexer lexer = new Lexer(new StringReader(content));
+        Parser parser = new Parser(lexer);
+        ASTNode ast = parser.getAST();
+        Semantic sem = new Semantic((ProgramNode) ast);
+        sem.findSemanticErrors();
+        String pathToClassFiles = null;
+        if (args.length > 1) {
+            pathToClassFiles = args[2];
+        }
+        CodeGeneration cg = new CodeGeneration((ProgramNode) ast, pathToClassFiles);
+        cg.codeGeneration();
     }
 }

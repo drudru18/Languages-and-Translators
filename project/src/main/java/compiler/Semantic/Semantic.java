@@ -551,6 +551,7 @@ public class Semantic {
             // For
             else if (typeEquals(statement, ForStatementNode.class)) {
                 ForStatementNode forStatementNode = (ForStatementNode) statement;
+                //TypeNode typeVar = findTypeOfExpression(forStatementNode.variable);
                 expectExpressionToHaveType(new ExpressionStatementNode(forStatementNode.variable), new TypeNode(new FloatType(), false));
                 expectExpressionToHaveType((ExpressionStatementNode) forStatementNode.initialValue, new TypeNode(new FloatType(), false));
                 expectExpressionToHaveType((ExpressionStatementNode) forStatementNode.maxValue, new TypeNode(new FloatType(), false));
@@ -560,8 +561,6 @@ public class Semantic {
             // Function call
             else if (typeEquals(statement, FunctionCallNode.class)) {
                 FunctionCallNode functionCallNode = (FunctionCallNode) statement;
-                // Here is the problem
-                System.out.println(statement);
                 findTypeOfVariable(functionCallNode);
             }
             // Free

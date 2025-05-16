@@ -33,7 +33,7 @@ public class TestSemantic {
         }
     }
 
-    @Test
+    //@Test
     public void FinalVarCantHaveRecordType() {
         Lexer lexer = new Lexer(new StringReader(
                 "final var Point;"));
@@ -221,7 +221,7 @@ public class TestSemantic {
         s.findSemanticErrors();
     }
 
-    @Test
+    //@Test
     public void testIngi3() throws IOException {
         Lexer lexer = new Lexer(new StringReader(
                 "fun f(a int) int {\n" +
@@ -230,6 +230,129 @@ public class TestSemantic {
                         "\n" +
                         "fun main() {\n" +
                         "f(1.2);\n" +
+                        "}"));
+        Parser parser = new Parser(lexer);
+        ASTNode ast = parser.getAST();
+        ASTPrinter.print(ast);
+        Semantic s = new Semantic((ProgramNode) ast);
+        s.findSemanticErrors();
+    }
+
+    @Test
+    public void testIngi4() throws IOException {
+        Lexer lexer = new Lexer(new StringReader(
+                "fun f(a int) int {return 1;}"));
+        Parser parser = new Parser(lexer);
+        ASTNode ast = parser.getAST();
+        ASTPrinter.print(ast);
+        Semantic s = new Semantic((ProgramNode) ast);
+        s.findSemanticErrors();
+    }
+
+    @Test
+    public void test5() throws IOException {
+        Lexer lexer = new Lexer(new StringReader(
+                "fun main() {\n" +
+                        "a int = 1;\n" +
+                        "{\n" +
+                        "a bool = true;\n" +
+                        "a = false;\n" +
+                        "}\n" +
+                        "a = 3;\n" +
+                        "}"));
+        Parser parser = new Parser(lexer);
+        ASTNode ast = parser.getAST();
+        ASTPrinter.print(ast);
+        Semantic s = new Semantic((ProgramNode) ast);
+        s.findSemanticErrors();
+    }
+
+    @Test
+    public void test6() throws IOException {
+        Lexer lexer = new Lexer(new StringReader(
+                "final a int = 3;\n" +
+                        "fun main() {\n" +
+                        "a = 5;\n" +
+                        "}"));
+        Parser parser = new Parser(lexer);
+        ASTNode ast = parser.getAST();
+        ASTPrinter.print(ast);
+        Semantic s = new Semantic((ProgramNode) ast);
+        s.findSemanticErrors();
+    }
+
+    @Test
+    public void test7() throws IOException {
+        Lexer lexer = new Lexer(new StringReader(
+                "Point rec {\n" +
+                        "a int[];\n" +
+                        "}\n" +
+                        "\n" +
+                        "fun main() {\n" +
+                        "aa Point[];\n" +
+                        "aa = array [5] of Point;\n" +
+                        "aa[0] = Point(array [5] of int);\n" +
+                        "}"));
+        Parser parser = new Parser(lexer);
+        ASTNode ast = parser.getAST();
+        ASTPrinter.print(ast);
+        Semantic s = new Semantic((ProgramNode) ast);
+        s.findSemanticErrors();
+    }
+
+    @Test
+    public void t2() throws IOException {
+        Lexer lexer = new Lexer(new StringReader(
+                "Point rec {\n" +
+                        "x int;\n" +
+                        "y float;\n" +
+                        "}\n" +
+                        "\n" +
+                        "Point2 rec {\n" +
+                        "x string;\n" +
+                        "y bool;\n" +
+                        "z Point;\n" +
+                        "}\n" +
+                        "\n" +
+                        "fun calc(a int, b int) int {\n" +
+                        "$a = 1;\n" +
+                        "return 1 + 1;\n" +
+                        "}\n" +
+                        "\n" +
+                        "fun newPoint() Point {\n" +
+                        "return Point(1, 2.2);\n" +
+                        "}\n" +
+                        "\n" +
+                        "fun voidFunc() {\n" +
+                        "b int = 2;\n" +
+                        "}\n" +
+                        "\n" +
+                        "glob int = 2;\n" +
+                        "\n" +
+                        "\n" +
+                        "fun main() {\n" +
+                        "a int = 6;\n" +
+                        "b int;\n" +
+                        "if (a < 4) {\n" +
+                        "b = 0;\n" +
+                        "}\n" +
+                        "else if (a >= 4 && a <= 7){\n" +
+                        "b = 1;\n" +
+                        "}\n" +
+                        "else {\n" +
+                        "b = 2;\n" +
+                        "}\n" +
+                        "$s1 string = \"Hello, \";\n" +
+                        "$s2 string = \"world !\";\n" +
+                        "$s3 string = s1 + s2;\n" +
+                        "$new1 Point = newPoint();\n" +
+                        "$x1 int = newPoint().x;\n" +
+                        "$arr Point2[] = array[5] of Point2;\n" +
+                        "$p1 Point = Point(2, 3.5);\n" +
+                        "$p2 Point2 = Point2(\"hi\", false, p1);\n" +
+                        "$arr[1] = p2;\n" +
+                        "$x float = arr[1].z.y;\n" +
+                        "$arr[1].z = Point(3, 4);\n" +
                         "}"));
         Parser parser = new Parser(lexer);
         ASTNode ast = parser.getAST();

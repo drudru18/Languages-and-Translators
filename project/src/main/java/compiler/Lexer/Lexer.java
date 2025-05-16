@@ -194,7 +194,7 @@ public class Lexer {
     }
 
     public void ignoreComment(){
-        while(top() != '\n'){
+        while(top() != '\n' && !isEndOfFile()){
             advance();
         }
     }

@@ -11,7 +11,6 @@ Point rec {
 x float[];
 y float;
 }
-a Point[] = array [5] of Point;
 
 fun main() {
 a int = 1;
@@ -101,5 +100,36 @@ return 1;
 
 fun main() {
 b int = f();
+}
+
+///
+
+fun main() {
+a int = 1;
+a int = 2;
+{
+a bool = true;
+a = false;
+}
+a = 3;
+}
+
+///
+
+final a int = 3;
+fun main() {
+a = 5;
+}
+
+///
+
+Point rec {
+a int[];
+}
+
+fun main() {
+aa Point[];
+aa = array [5] of Point;
+aa[0] = Point(array [5] of int);
 }
 

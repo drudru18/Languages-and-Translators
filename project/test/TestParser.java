@@ -117,4 +117,26 @@ public class TestParser {
         ASTPrinter.print(ast);
     }
 
+    @Test
+    public void t2() {
+        Lexer lexer = new Lexer(new StringReader(
+                "Point rec {\n" +
+                        "x int;\n" +
+                        "y float;\n" +
+                        "}\n" +
+                        "\n" +
+                        "Point2 rec {\n" +
+                        "x string;\n" +
+                        "y bool;\n" +
+                        "z Point;\n" +
+                        "}\n" +
+                        "\n" +
+                        "p Point2[] = array [5] of Point2;\n" +
+                        "\n" +
+                        "arr1_first Point2 = Point2(p[0][0], p[0][1], Point(5, 5.5));"));
+        Parser parser = new Parser(lexer);
+        ASTNode ast = parser.getAST();
+        ASTPrinter.print(ast);
+    }
+
 }

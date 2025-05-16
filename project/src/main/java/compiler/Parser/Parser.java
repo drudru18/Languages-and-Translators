@@ -713,10 +713,4 @@ public class Parser {
 
         return new DeallocationNode(node);
     }
-
-
-
-    public static void main(String[] args) {
-        System.out.println(1);
-    }
 }
