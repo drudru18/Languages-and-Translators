@@ -33,3 +33,7 @@ fun write(s string) {
 
 fun writeln(s string) {
 }
+
+fun stringsEqual(s1 string, s2 string) bool {
+return true;
+}

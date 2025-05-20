@@ -1,0 +1,65 @@
+final minimumGradeToPass float = 5;
+
+FullName rec {
+firstName string;
+lastName string;
+}
+
+Student rec {
+grades int[];
+name FullName;
+}
+
+fun computeAvg(student Student) float {
+grades int[] = student.grades;
+avg float = 0;
+i int;
+for (i, 0, len(grades)-1, 1) {
+avg = avg + student.grades[i];
+}
+return avg / len(grades);
+}
+
+$ Returns true if the student passed the year
+fun studentPassed(student Student) bool {
+avg float = computeAvg(student);
+return avg >= minimumGradeToPass;
+}
+
+fun main() {
+$ Array containing all the students
+students Student[] = array [3] of Student;
+
+$ First student
+students[0] = Student(array[3] of int, FullName("John", "Johnny"));
+students[0].grades[0] = 8;
+students[0].grades[1] = 5;
+students[0].grades[2] = 10;
+
+$ Second student
+students[1] = Student(array[3] of int, FullName("Gabriel", "Gabreilly"));
+students[1].grades[0] = 4;
+students[1].grades[1] = 5;
+students[1].grades[2] = 4;
+
+$ Third student
+students[2] = Student(array[4] of int, FullName("Matthew", "Matt"));
+students[2].grades[0] = 2;
+students[2].grades[1] = 6;
+students[2].grades[2] = 9;
+students[2].grades[3] = 8;
+
+i int;
+for (i, 0, len(students)-1, 1) {
+        if (studentPassed(students[i])) {
+            write("Student " + students[i].name.firstName + " " + students[i].name.lastName +
+             " passed the year with an average grade of ");
+            writeln(computeAvg(students[i]));
+        }
+        else {
+            write("Student " + students[i].name.firstName + " " + students[i].name.lastName +
+             " failed the year with an average grade of ");
+            writeln(computeAvg(students[i]));
+        }
+    }
+}

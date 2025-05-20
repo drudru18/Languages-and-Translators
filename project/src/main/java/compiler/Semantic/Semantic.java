@@ -25,10 +25,15 @@ import java.util.*;
 
 public class Semantic {
 
-    private static final HashSet<String> flexibleFunctions = new HashSet<>();
+    private static final HashSet<String> writeFunctions = new HashSet<>();
     static {
-        flexibleFunctions.add("write");
-        flexibleFunctions.add("writeln");
+        writeFunctions.add("write");
+        writeFunctions.add("writeln");
+    }
+
+    private static final HashSet<String> lenFunctions = new HashSet<>();
+    static {
+        lenFunctions.add("len");
     }
 
     private static final HashSet<String> primitiveTypes = new HashSet<>();
@@ -115,12 +120,21 @@ public class Semantic {
             throw new RuntimeException("ArgumentError");
         }
         for (int i = 0; i < expectedParameters.size(); i++) {
-            // if the function is flexible (write and writeln)
-            if (flexibleFunctions.contains(funcDecl.functionName)) {
+            // if the function is write or writeln
+            if (writeFunctions.contains(funcDecl.functionName)) {
                 // get the type on input
                 TypeNode typeOfInput = findTypeOfExpression(arguments.get(i));
                 // if the type is primitive and not array, don't verify anything
                 if (primitiveTypes.contains(typeOfInput.type.value) && !typeOfInput.isArray) {
+                    return;
+                }
+            }
+            // if the function is len
+            if (lenFunctions.contains(funcDecl.functionName)) {
+                // get the type on input
+                TypeNode typeOfInput = findTypeOfExpression(arguments.get(i));
+                // if the type is array, don't verify anything
+                if (typeOfInput.isArray) {
                     return;
                 }
             }
@@ -627,7 +641,12 @@ public class Semantic {
         }
         // If both are not null but have different types, throw error
         if (currentFunctionReturnedType != null) {
-            if (!Objects.equals(currentFunctionReturnedType, functionReturnType)) {
+            boolean isOk = false;
+            if (!functionReturnType.isArray && Objects.equals(functionReturnType.type.value, "float") &&
+                    !currentFunctionReturnedType.isArray && Objects.equals(currentFunctionReturnedType.type.value, "int")) {
+                isOk = true;
+            }
+            if (!isOk && !Objects.equals(currentFunctionReturnedType, functionReturnType)) {
                 throw new RuntimeException("ReturnError");
             }
         }

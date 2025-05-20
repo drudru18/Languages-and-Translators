@@ -38,10 +38,15 @@ public class CodeGeneration {
         }
     }
 
-    private static final HashSet<String> flexibleFunctions = new HashSet<>();
+    private static final HashSet<String> writeFunctions = new HashSet<>();
     static {
-        flexibleFunctions.add("write");
-        flexibleFunctions.add("writeln");
+        writeFunctions.add("write");
+        writeFunctions.add("writeln");
+    }
+
+    private static final HashSet<String> lenFunctions = new HashSet<>();
+    static {
+        lenFunctions.add("len");
     }
 
     // Be careful to increase and decrease this value when necessary
@@ -861,7 +866,7 @@ public class CodeGeneration {
     private String getFunctionDescriptor(FunctionCallNode node, FunctionDeclarationNode funDecl, boolean isDecl) {
         StringBuilder descriptor = new StringBuilder();
         descriptor.append("(");
-        if (isDecl || !flexibleFunctions.contains(funDecl.functionName)) {
+        if (isDecl || (!writeFunctions.contains(funDecl.functionName) && !lenFunctions.contains(funDecl.functionName))) {
             for (ParameterNode param : funDecl.parameters) {
                 TypeNode paramType = (TypeNode) param.type;
                 descriptor.append(getTypeOfVariableInBytecode(paramType));
@@ -990,7 +995,8 @@ public class CodeGeneration {
                 expectExpressionToHaveType((ExpressionStatementNode) arrayAccessNode.index, new TypeNode(new IntType(), false));
 
                 codeGenerationExpression(mv, arrayAccessNode.index);
-                mv.visitInsn(getArrayTypeToLoadOpcode(nodeType));
+                TypeNode currentType = new TypeNode(nodeType.type, false);
+                mv.visitInsn(getArrayTypeToLoadOpcode(currentType));
 
                 return new TypeNode(nodeType.type, false);
             }
@@ -1470,7 +1476,7 @@ public class CodeGeneration {
         cw.visitEnd();
     }
 
-    private void codeLenFunction(ClassWriter cw) {
+    private void codeLenStringFunction(ClassWriter cw) {
         MethodVisitor mv = cw.visitMethod(
                 ACC_PUBLIC | ACC_STATIC,
                 "len",
@@ -1491,6 +1497,31 @@ public class CodeGeneration {
         mv.visitInsn(IRETURN);
 
         mv.visitMaxs(0, 0); // Let ASM calculate stack/local sizes
+        mv.visitEnd();
+
+        cw.visitEnd();
+    }
+
+    private void codeLenArrayFunction(ClassWriter cw, String arrayType) {
+        // public static int len(Type[] arr)
+        MethodVisitor mv = cw.visitMethod(
+                ACC_PUBLIC + ACC_STATIC,
+                "len",
+                "(" + arrayType + ")I", // Descriptor for: Type[] -> int
+                null,
+                null
+        );
+
+        mv.visitCode();
+
+        mv.visitVarInsn(ALOAD, 0);
+
+        // Get its length
+        mv.visitInsn(ARRAYLENGTH);
+
+        mv.visitInsn(IRETURN);
+
+        mv.visitMaxs(0, 0);
         mv.visitEnd();
 
         cw.visitEnd();
@@ -1638,24 +1669,87 @@ public class CodeGeneration {
         mv.visitEnd();
     }
 
+    public void codeCompareStringsContent(ClassWriter cw) {
+        // public static boolean stringsEqual(String s1, String s2)
+        MethodVisitor mv = cw.visitMethod(
+                Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
+                "stringsEqual",
+                "(Ljava/lang/String;Ljava/lang/String;)Z",
+                null,
+                null
+        );
+        mv.visitCode();
+
+        // Load s1 and s2
+        mv.visitVarInsn(Opcodes.ALOAD, 0);
+        mv.visitVarInsn(Opcodes.ALOAD, 1);
+
+        // Call s1.equals(s2)
+        mv.visitMethodInsn(
+                Opcodes.INVOKEVIRTUAL,
+                "java/lang/String",
+                "equals",
+                "(Ljava/lang/Object;)Z",
+                false
+        );
+
+        mv.visitInsn(Opcodes.IRETURN);
+
+        mv.visitMaxs(0, 0);
+        mv.visitEnd();
+
+        cw.visitEnd();
+    }
+
     private void codeForMainAndBuiltIn(ClassWriter cw) {
+        // Main function
         codeMainEntryPoint(cw);
-        codeWriteFunction(cw, new TypeNode(new StringType(), false));
-        codeWriteFunction(cw, new TypeNode(new IntType(), false));
-        codeWriteFunction(cw, new TypeNode(new FloatType(), false));
-        codeWriteFunction(cw, new TypeNode(new BoolType(), false));
-        codeWritelnFunction(cw, new TypeNode(new StringType(), false));
-        codeWritelnFunction(cw, new TypeNode(new IntType(), false));
-        codeWritelnFunction(cw, new TypeNode(new FloatType(), false));
-        codeWritelnFunction(cw, new TypeNode(new BoolType(), false));
+        // Built-in functions
+
+        //
+        // Add all the primitive types for the write functions
+        ArrayList<TypeNode> primitiveNonArrayTypes = new ArrayList<>();
+        primitiveNonArrayTypes.add(new TypeNode(new StringType(), false));
+        primitiveNonArrayTypes.add(new TypeNode(new IntType(), false));
+        primitiveNonArrayTypes.add(new TypeNode(new FloatType(), false));
+        primitiveNonArrayTypes.add(new TypeNode(new BoolType(), false));
+        for (TypeNode typeNode : primitiveNonArrayTypes) {
+            codeWriteFunction(cw, typeNode);
+            codeWritelnFunction(cw, typeNode);
+        }
+        //
+
         codeWriteIntFunction(cw);
         codeWriteFloatFunction(cw);
-        codeLenFunction(cw);
+
+        //
+        codeLenStringFunction(cw);
+
+        // Add all the types for the len function
+        HashSet<String> arrayTypes = new HashSet<>();
+        arrayTypes.add("[I");
+        arrayTypes.add("[Z");
+        arrayTypes.add("[F");
+        arrayTypes.add("[Ljava/lang/String;");
+        for (ASTNode astNode : root.nodes) {
+            if (typeEquals(astNode, RecordDeclarationNode.class)) {
+                RecordDeclarationNode recordDecl = (RecordDeclarationNode) astNode;
+                arrayTypes.add("[L" + recordDecl.recordName + ";");
+            }
+        }
+        for (String arrayType : arrayTypes) {
+            codeLenArrayFunction(cw, arrayType);
+        }
+
+
+        //
+
         codeChrFunction(cw);
         codeFloorFunction(cw);
         codeReadStringFunction(cw);
         codeReadFloatFunction(cw);
         codeReadIntFunction(cw);
+        codeCompareStringsContent(cw);
     }
 
     /// Main function (entry point)
@@ -1699,6 +1793,7 @@ public class CodeGeneration {
         staticInit.visitCode();
         for (VariableDeclarationNode varDec : initialisedGlobalVariables) {
             codeGenerationExpression(staticInit, ((ExpressionStatementNode)varDec.initializer).expression);
+            convertIntToFloat(staticInit, varDec.typeNode, findTypeOfExpression(((ExpressionStatementNode)varDec.initializer).expression));
             staticInit.visitFieldInsn(PUTSTATIC, mainClassName, varDec.varName, getTypeOfVariableInBytecode(varDec.typeNode));
         }
 
@@ -1915,7 +2010,7 @@ public class CodeGeneration {
 
     ///Check function declaration and block node
 
-    public void checkBlockNode(MethodVisitor mv, BlockNode node) {
+    public void checkBlockNode(MethodVisitor mv, BlockNode node, FunctionDeclarationNode funDecl) {
         pushScope();
         for (ASTNode statement : node.statements) {
             // Variable declaration
@@ -1933,7 +2028,7 @@ public class CodeGeneration {
             }
             // Block
             else if (typeEquals(statement, BlockNode.class)) {
-                checkBlockNode(mv, (BlockNode) statement);
+                checkBlockNode(mv, (BlockNode) statement, funDecl);
             }
             // If
             else if (typeEquals(statement, IfStatementNode.class)) {
@@ -1945,7 +2040,7 @@ public class CodeGeneration {
                 codeGenerationExpression(mv, ifStatementNode.condition);
                 mv.visitJumpInsn(IFEQ, currentLabel);
 
-                checkBlockNode(mv, (BlockNode) ifStatementNode.ifBlock);
+                checkBlockNode(mv, (BlockNode) ifStatementNode.ifBlock, funDecl);
 
                 mv.visitJumpInsn(GOTO, endLabel);
 
@@ -1956,14 +2051,14 @@ public class CodeGeneration {
                     codeGenerationExpression(mv, elseIfBranchNode.condition);
                     mv.visitJumpInsn(IFEQ, currentLabel);
 
-                    checkBlockNode(mv, (BlockNode) elseIfBranchNode.block);
+                    checkBlockNode(mv, (BlockNode) elseIfBranchNode.block, funDecl);
                     mv.visitJumpInsn(GOTO, endLabel);
                 }
 
                 mv.visitLabel(currentLabel);
 
                 if (ifStatementNode.elseBlock != null) {
-                    checkBlockNode(mv, (BlockNode) ifStatementNode.elseBlock);
+                    checkBlockNode(mv, (BlockNode) ifStatementNode.elseBlock, funDecl);
                     mv.visitJumpInsn(GOTO, endLabel);
                 }
                 mv.visitLabel(endLabel);
@@ -1979,7 +2074,7 @@ public class CodeGeneration {
                 codeGenerationExpression(mv, whileStatementNode.condition);
                 mv.visitJumpInsn(IFEQ, endLabel);
 
-                checkBlockNode(mv, (BlockNode) whileStatementNode.body);
+                checkBlockNode(mv, (BlockNode) whileStatementNode.body, funDecl);
 
                 mv.visitJumpInsn(GOTO, loopLabel);
                 mv.visitLabel(endLabel);
@@ -2004,7 +2099,7 @@ public class CodeGeneration {
                 codeGenerationExpression(mv, new BinaryOperationNode("<=", forStatementNode.variable, forStatementNode.maxValue));
                 mv.visitJumpInsn(IFEQ, endLabel);
 
-                checkBlockNode(mv, (BlockNode) forStatementNode.body);
+                checkBlockNode(mv, (BlockNode) forStatementNode.body, funDecl);
 
                 generateCodeForAssignment(mv, forStatementNode.variable, true, new BinaryOperationNode("+", forStatementNode.variable, forStatementNode.incrementValue));
                 mv.visitJumpInsn(GOTO, loopLabel);
@@ -2037,8 +2132,11 @@ public class CodeGeneration {
                 // Push the value on the stack
                 codeGenerationExpression(mv, returnStatementNode.value);
 
+                TypeNode retType = (TypeNode) funDecl.returnType;
+                convertIntToFloat(mv, retType, findTypeOfExpression(returnExpression));
+
                 //
-                mv.visitInsn(getTypeForReturnBytecode(returnedType));
+                mv.visitInsn(getTypeForReturnBytecode(retType));
 
                 // Stack verify
                 mv.visitMaxs(0, 0);
@@ -2068,21 +2166,20 @@ public class CodeGeneration {
             addVariableToScope(parameter.paramName, new VariableDeclarationNode(false, parameter.paramName, (TypeNode) parameter.type, null));
         }
         BlockNode functionBlock = (BlockNode) node.functionBody;
-        checkBlockNode(mv, functionBlock);
+        checkBlockNode(mv, functionBlock, node);
         TypeNode functionReturnType = (TypeNode) node.returnType;
+        /*
+        if (node.returnType != null) {
+            convertIntToFloat(mv, (TypeNode) node.returnType, currentFunctionReturnedType);
+        }
+
+         */
         // If one is null and the other not, throw error
         if ((currentFunctionReturnedType == null && functionReturnType != null) || (currentFunctionReturnedType != null && functionReturnType == null)) {
             throw new RuntimeException("ReturnError");
         }
-        // If both are not null but have different types, throw error
-        if (currentFunctionReturnedType != null) {
-            if (!Objects.equals(currentFunctionReturnedType, functionReturnType)) {
-                throw new RuntimeException("ReturnError");
-            }
-        }
         if (node.returnType == null) {
             mv.visitInsn(RETURN);
-
             // Stack verify
             mv.visitMaxs(0, 0);
             mv.visitEnd();
@@ -2149,8 +2246,5 @@ public class CodeGeneration {
                 checkRecordDeclaration((RecordDeclarationNode) node);
             }
         }
-    }
-
-    public static void main(String[] args) throws IOException {
     }
 }

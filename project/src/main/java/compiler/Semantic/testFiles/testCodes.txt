@@ -1,0 +1,186 @@
+    /// "TypeError"
+
+/// 1) "not a type" variable type
+var not_a_type = 5;
+
+/// 2) wrong type of assigned value
+var int = "this should be an int, not a string";
+
+/// 3) wrong type of assigned value
+var string = false;
+
+/// 4) wrong type of assigned value
+Student rec {
+name string;
+}
+stud Student = "hello";
+
+    /// "RecordError”
+
+/// 1) assigning the same record type twice
+Student rec{
+name string;
+}
+
+Student rec{
+age int;
+}
+
+    /// "OperatorError"
+
+/// 1) sum between a string and an int
+var int = 3 + "hello";
+
+/// 2) product between a float and a bool
+var float = true * 5.6;
+
+/// 3) subtraction between an int and a rec
+Student rec{
+age int;
+}
+var int = 5 - Student(5);
+
+/// 4) modulo between a float and an int
+var int = 5 % 4.1;
+
+/// 5) greater than comparison between int and strings
+var bool = 5 > "hello";
+
+/// 6) logical or between string and bool
+var bool = false || "hello";
+
+    /// "ArgumentError"
+
+/// 1) not enough parameters
+fun sum(a int, b int) int {
+return a + b;
+}
+
+fun main() {
+sum(5);
+}
+
+/// 2) too many parameters
+fun sum(a int, b int) int {
+return a + b;
+}
+
+fun main() {
+sum(5, 6, 7);
+}
+
+/// 3) incorrect type
+fun sum(a int, b int) int {
+return a + b;
+}
+
+fun main() {
+sum(5, false);
+}
+
+/// 4) record constructor not enough parameters
+Student rec {
+grades int[];
+age int;
+}
+
+fun main() {
+student1 Student = Student(array [5] of int);
+}
+
+/// 5) record constructor too many parameters
+Student rec {
+grades int[];
+age int;
+}
+
+fun main() {
+student1 Student = Student(array [5] of int, 20, false);
+}
+
+/// 6) record constructor incorrect type
+Student rec {
+grades int[];
+age int;
+}
+
+fun main() {
+student1 Student = Student(array [5] of int, "hello");
+}
+
+    /// "MissingConditionError"
+
+/// 1) `if` has not boolean condition
+fun main() {
+if (3) {
+writeln("Do smth");
+}
+else {
+writeln("Do smth else");
+}
+}
+
+/// 2) `while` has not boolean condition
+fun main() {
+while (10) {
+writeln("Do smth");
+}
+}
+
+    /// "ReturnError"
+
+/// 1) should return int, returns nothing
+fun f() int {
+}
+
+/// 2) should return int, returns bool
+fun f() int {
+return true;
+}
+
+/// 3) should return nothing, returns float
+fun f() {
+return 6.96;
+}
+
+/// 4) should return array of records, returns a record
+Student rec{
+name string;
+}
+
+fun f() Student[] {
+return Student("George");
+}
+
+    /// “ScopeError”
+
+/// 1) using undeclared variable
+fun main() {
+a = 5;
+}
+
+/// 2) using variable that was declared in a previous scope
+fun main() {
+{
+a int;
+a = 5;
+}
+a = 5;
+}
+
+/// 3) declaring the same variable multiple times in the same scope
+fun main() {
+a int = 5;
+a int = 6;
+}
+
+/// 4) using undefined function
+fun main() {
+foo();
+}
+
+/// 5) defining 2 times the same function
+fun foo() {
+}
+fun foo() {
+}

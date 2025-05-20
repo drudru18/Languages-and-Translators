@@ -1,0 +1,78 @@
+/// Variable declarations and assignments
+
+final a int = 42;
+var123 float = 3.14;
+isOk bool = true;
+message string = "This is a simple message";
+
+/// Record definition with its fields
+
+Student rec {
+grades int[];
+followedCurses string[];
+height float;
+isMinor bool;
+}
+
+/// Functions, loops and expressions
+
+fun isGraduating(Student stud) bool {
+avg float = 0;
+i int;
+for (i, 0, len(grades)-1, 1) {
+avg = avg + grades[i];
+}
+isOk bool;
+if (avg >= 5) {
+isOk = true;
+}
+else {
+isOk = false;
+}
+return isOk;
+}
+
+/// More complex expressions with all sorts of operations
+
+fun main() {
+aBool bool = true;
+val1 int = 10;
+val2 float = 8.99;
+if (val1 > val2 * 2 && aBool || (val1 - val2) % 5 == 1){
+writeln("yes");
+}
+else {
+writeln("no");
+}
+}
+
+/// Array access and free, comments and rest of
+/// conditional blocks
+
+fun main() {
+arr1 int[] = array [5] of int;
+arr1[2] = 8;
+$ comment 1
+prod int = 1;
+while (arr1[2] != 0) {
+arr1[2] = arr1[2] - 1;
+prod = prod * 2;
+$ comment 2
+}
+free arr1;
+}
+
+/// Field access and function call
+Student rec {
+age int;
+}
+
+fun foo(a int, b int) int {
+return a + b;
+}
+
+fun main() {
+stud1 Student = Student(20);
+writeln(stud1.age);
+writeln(foo(3, 4));
+}

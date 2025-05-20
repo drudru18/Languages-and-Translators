@@ -10,133 +10,129 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/// Note: The tests for this phase print the AST recursively found by the Parser and
+///       you can see that they print the expected tree nodes
 public class TestParser {
 
+    /// Tests:
+
+    /// Variable declarations and assignments
     @Test
-    public void testFinalVariablesDeclaration() {
+    public void test1() {
         Lexer lexer = new Lexer(new StringReader(
-                "final height int = 181;\n" +
-                        "final weight float = 78.57;\n" +
-                        "final isEmpty bool = true;\n" +
-                        "final firstMessage string = \"Hi, how are you ?\";"));
+                "final a int = 42;\n" +
+                        "var123 float = 3.14;\n" +
+                        "isOk bool = true;\n" +
+                        "message string = \"This is a simple message\";"));
         Parser parser = new Parser(lexer);
         ASTNode ast = parser.getAST();
         ASTPrinter.print(ast);
     }
 
+    /// Record definition with its fields (the fields are considered variable declarations
+    /// with no instantiation and no final keyword)
     @Test
-    public void testRecordDeclaration() {
+    public void test2() {
         Lexer lexer = new Lexer(new StringReader(
                 "Student rec {\n" +
-                        "   height float;\n" +
-                        "   age int;\n" +
-                        "   grades int[];\n" +
-                        "   name string;\n" +
-                        "}\n" +
-                        "\n" +
-                        "School rec {\n" +
-                        "   name string;\n" +
-                        "   location string;\n" +
-                        "   students Student[];\n" +
+                        "grades int[];\n" +
+                        "followedCurses string[];\n" +
+                        "height float;\n" +
+                        "isMinor bool;\n" +
                         "}"));
         Parser parser = new Parser(lexer);
         ASTNode ast = parser.getAST();
         ASTPrinter.print(ast);
     }
 
+    /// Functions, loops and expressions
+    /// Note: this code can't work without the preceding one, but
+    /// it's not Parser's work to verify this
     @Test
-    public void testFunctionDeclarationComplexExpressionsArrayAccessFunctionCall() {
+    public void test3() {
         Lexer lexer = new Lexer(new StringReader(
-                "Student rec {\n" +
-                        "   height float;\n" +
-                        "   age int;\n" +
-                        "   grades int[];\n" +
-                        "   name string;\n" +
+                "fun isGraduating(stud Student) bool {\n" +
+                        "avg float = 0;\n" +
+                        "i int;\n" +
+                        "for (i, 0, len(grades)-1, 1) {\n" +
+                        "avg = avg + grades[i];\n" +
                         "}\n" +
-                        "\n" +
-                        "fun gradesAverage(student Student) float {\n" +
-                        "   sum int = 0;\n" +
-                        "   iter int;\n" +
-                        "   for(iter, 0, len(student.grades), 1) {\n" +
-                        "      sum = sum + student.grades[iter];\n" +
-                        "   }\n" +
-                        "   return sum / len(student.grades);\n" +
+                        "isOk bool;\n" +
+                        "if (avg >= 5) {\n" +
+                        "isOk = true;\n" +
+                        "}\n" +
+                        "else {\n" +
+                        "isOk = false;\n" +
+                        "}\n" +
+                        "return isOk;\n" +
                         "}"));
         Parser parser = new Parser(lexer);
         ASTNode ast = parser.getAST();
         ASTPrinter.print(ast);
     }
 
+    /// More complex expressions with all sorts of operations
+    /// and showing operations ordering in expressions
     @Test
-    public void testIfElseWhileGlobalVar() {
+    public void test4() {
         Lexer lexer = new Lexer(new StringReader(
-                "global bool = false;\n" +
+                "fun main() {\n" +
+                        "aBool bool = true;\n" +
+                        "val1 int = 10;\n" +
+                        "val2 float = 8.99;\n" +
+                        "if (val1 > val2 * 2 && aBool || (val1 - val2) % 5 == 1){\n" +
+                        "writeln(\"yes\");\n" +
+                        "}\n" +
+                        "else {\n" +
+                        "writeln(\"no\");\n" +
+                        "}\n" +
+                        "}"));
+        Parser parser = new Parser(lexer);
+        ASTNode ast = parser.getAST();
+        ASTPrinter.print(ast);
+    }
+
+    /// Array access and free, comments and rest of
+    /// conditional blocks
+    @Test
+    public void test5() {
+        Lexer lexer = new Lexer(new StringReader(
+                "fun main() {\n" +
+                        "arr1 int[] = array [5] of int;\n" +
+                        "arr1[2] = 8;\n" +
+                        "$ comment 1\n" +
+                        "prod int = 1;\n" +
+                        "while (arr1[2] != 0) {\n" +
+                        "arr1[2] = arr1[2] - 1;\n" +
+                        "prod = prod * 2;\n" +
+                        "$ comment 2\n" +
+                        "}\n" +
+                        "free arr1;\n" +
+                        "}"));
+        Parser parser = new Parser(lexer);
+        ASTNode ast = parser.getAST();
+        ASTPrinter.print(ast);
+    }
+
+    /// Field access and function call
+    @Test
+    public void test6() {
+        Lexer lexer = new Lexer(new StringReader(
+                "Student rec {\n" +
+                        "age int;\n" +
+                        "}\n" +
+                        "\n" +
+                        "fun foo(a int, b int) int {\n" +
+                        "return a + b;\n" +
+                        "}\n" +
                         "\n" +
                         "fun main() {\n" +
-                        "   if(!global){\n" +
-                        "      print(\"Not global\");\n" +
-                        "   }\n" +
-                        "   else if(global){\n" +
-                        "      print(\"Global\");\n" +
-                        "   }\n" +
-                        "   else {\n" +
-                        "      print(\"This case is impossible\");\n" +
-                        "   }\n" +
-                        "   val int = 5;\n" +
-                        "   while(val > 0){\n" +
-                        "      print(\"Stille positive\");\n" +
-                        "   }\n" +
+                        "stud1 Student = Student(20);\n" +
+                        "writeln(stud1.age);\n" +
+                        "writeln(foo(3, 4));\n" +
                         "}"));
         Parser parser = new Parser(lexer);
         ASTNode ast = parser.getAST();
         ASTPrinter.print(ast);
     }
-
-    @Test
-    public void FreeKeyword() {
-        Lexer lexer = new Lexer(new StringReader(
-                "fun main() {\n" +
-                        "a int[];\n" +
-                        "a = array [5] of int;\n" +
-                        "free a;\n" +
-                        "}"));
-        Parser parser = new Parser(lexer);
-        ASTNode ast = parser.getAST();
-        ASTPrinter.print(ast);
-    }
-
-    @Test
-    public void t1() {
-        Lexer lexer = new Lexer(new StringReader(
-                "fun main() {\n" +
-                        "a int = 1;\n" +
-                        "a.b.c = 3;\n" +
-                        "}"));
-        Parser parser = new Parser(lexer);
-        ASTNode ast = parser.getAST();
-        ASTPrinter.print(ast);
-    }
-
-    @Test
-    public void t2() {
-        Lexer lexer = new Lexer(new StringReader(
-                "Point rec {\n" +
-                        "x int;\n" +
-                        "y float;\n" +
-                        "}\n" +
-                        "\n" +
-                        "Point2 rec {\n" +
-                        "x string;\n" +
-                        "y bool;\n" +
-                        "z Point;\n" +
-                        "}\n" +
-                        "\n" +
-                        "p Point2[] = array [5] of Point2;\n" +
-                        "\n" +
-                        "arr1_first Point2 = Point2(p[0][0], p[0][1], Point(5, 5.5));"));
-        Parser parser = new Parser(lexer);
-        ASTNode ast = parser.getAST();
-        ASTPrinter.print(ast);
-    }
-
 }
