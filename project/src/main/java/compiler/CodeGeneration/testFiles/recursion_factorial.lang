@@ -1,0 +1,17 @@
+$ Tests a program that recursively computes the factorial of a number you choose as input
+
+fun factorial(x int) int {
+    valToReturn int;
+    if (x <= 0) {
+        valToReturn = 1;
+    }
+    else {
+        valToReturn = x * factorial(x-1);
+    }
+    return valToReturn;
+}
+
+fun main() {
+    x int = readInt();
+    writeln(chr(x) + "! = " + chr(factorial(x)));
+}

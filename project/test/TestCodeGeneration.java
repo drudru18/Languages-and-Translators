@@ -7,10 +7,7 @@ import compiler.Parser.Parser;
 import compiler.Semantic.Semantic;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -42,38 +39,70 @@ public class TestCodeGeneration {
 
     /// Function that executes the main file class and prints the output
     public void execute(String outputFolder, String outputFile) throws IOException, InterruptedException {
-        try {
-            // Set the correct path to where Java is on you machine to make this work
-            // Apparently Intellij doesn't recognize "java"...
-            String javaPath = "/usr/lib/jvm/java-17-openjdk-amd64/bin/java"; // (to modify)
-            ProcessBuilder builder = new ProcessBuilder(
-                    javaPath, "-cp", outputFolder, outputFile
-            );
+        // Set the correct path to where Java is on your machine (you, the code reviewer) to make this work
+        // Apparently Intellij doesn't recognize "java"...
+        String javaPath = "/usr/lib/jvm/java-17-openjdk-amd64/bin/java"; // (to modify)
+        ProcessBuilder builder = new ProcessBuilder(
+                javaPath, "-cp", outputFolder, outputFile
+        );
 
-            Process process = builder.start();
+        Process process = builder.start();
 
-            // Capture stdout
-            BufferedReader stdOut = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            // Capture stderr
-            BufferedReader stdErr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+        // Capture stdout
+        BufferedReader stdOut = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        // Capture stderr
+        BufferedReader stdErr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
-            System.out.println("Standard Output:");
-            String line;
-            while ((line = stdOut.readLine()) != null) {
-                System.out.println(line);
-            }
-
-            System.out.println("\nError Output:");
-            while ((line = stdErr.readLine()) != null) {
-                System.err.println(line);
-            }
-
-            int exitCode = process.waitFor();
-            System.out.println("\nExited with code: " + exitCode);
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+        System.out.println("Standard Output:");
+        String line;
+        while ((line = stdOut.readLine()) != null) {
+            System.out.println(line);
         }
+
+        System.out.println("\nError Output:");
+        while ((line = stdErr.readLine()) != null) {
+            System.err.println(line);
+        }
+
+        int exitCode = process.waitFor();
+        System.out.println("\nExited with code: " + exitCode);
+    }
+
+    /// Function that executes the main file class and prints the output
+    public void executeWithInput(String outputFolder, String outputFile, String inputText) throws IOException, InterruptedException {
+        // Set the correct path to where Java is on your machine (you, the code reviewer) to make this work
+        // Apparently Intellij doesn't recognize "java"...
+        String javaPath = "/usr/lib/jvm/java-17-openjdk-amd64/bin/java"; // (to modify)
+        ProcessBuilder builder = new ProcessBuilder(
+                javaPath, "-cp", outputFolder, outputFile
+        );
+
+        Process process = builder.start();
+
+        // Write simulated input to the child process
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()))) {
+            writer.write(inputText);
+            writer.flush();
+        }
+
+        // Capture stdout
+        BufferedReader stdOut = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        // Capture stderr
+        BufferedReader stdErr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+        System.out.println("Standard Output:");
+        String line;
+        while ((line = stdOut.readLine()) != null) {
+            System.out.println(line);
+        }
+
+        System.out.println("\nError Output:");
+        while ((line = stdErr.readLine()) != null) {
+            System.err.println(line);
+        }
+
+        int exitCode = process.waitFor();
+        System.out.println("\nExited with code: " + exitCode);
     }
 
     /// Function that receives the file content and an Error type
@@ -100,6 +129,57 @@ public class TestCodeGeneration {
         String content = Files.readString(Paths.get(commonPath + fileName));
         compile(content, mainClassName + "/" + mainClassName + ".class");
         execute(mainClassName + "/", mainClassName);
+    }
+
+    /// Tests a program that verifies the simple math conjectures which says that whatever natural number
+    /// pick, while the number is different of 1, if it's odd multiply it by 3 and add 1 and if it's even
+    /// divide it by 2, you will always end up to 1 at some point.
+    /// This test asks you to choose a number in the variable `yourNumber` that will be given as input in stdin
+    /// to the program launched to test the scan functionality
+    /// The source code can be found in: "src/main/java/compiler/CodeGeneration/testFiles/simple_math_conjecture.lang"
+    /// and the .class files in: "simple_math_conjecture/" (at the root of the project)
+    @Test
+    public void test_simple_math_conjecture() throws IOException, InterruptedException {
+        String mainClassName = "simple_math_conjecture";
+        String fileName = mainClassName + ".lang";
+        String content = Files.readString(Paths.get(commonPath + fileName));
+        compile(content, mainClassName + "/" + mainClassName + ".class");
+        // Choose the number you want to run the program with (default 7)
+        String yourNumber = "7";
+        executeWithInput(mainClassName + "/", mainClassName, yourNumber);
+    }
+
+    /// Tests a program that recursively computes the factorial of a number you choose as input
+    /// This test asks you to choose a number in the variable `yourNumber` that will be given as input in stdin
+    /// to the program launched to test the scan functionality
+    /// The source code can be found in: "src/main/java/compiler/CodeGeneration/testFiles/recursion_factorial.lang"
+    /// and the .class files in: "recursion_factorial/" (at the root of the project)
+    @Test
+    public void test_recursion_factorial() throws IOException, InterruptedException {
+        String mainClassName = "recursion_factorial";
+        String fileName = mainClassName + ".lang";
+        String content = Files.readString(Paths.get(commonPath + fileName));
+        compile(content, mainClassName + "/" + mainClassName + ".class");
+        // Choose the number you want to run the program with (default 7)
+        String yourNumber = "7";
+        executeWithInput(mainClassName + "/", mainClassName, yourNumber);
+    }
+
+    /// Tests a program that prints a countdown starting from a value, but only prints 1 value out of 2
+    /// to show the usage of booleans and of the `!` (not) unary operator
+    /// This test asks you to choose a number in the variable `yourNumber` that will be given as input in stdin
+    /// to the program launched to test the scan functionality
+    /// The source code can be found in: "src/main/java/compiler/CodeGeneration/testFiles/countdown_with_redlight.lang"
+    /// and the .class files in: "countdown_with_redlight/" (at the root of the project)
+    @Test
+    public void test_countdown_with_redlight() throws IOException, InterruptedException {
+        String mainClassName = "countdown_with_redlight";
+        String fileName = mainClassName + ".lang";
+        String content = Files.readString(Paths.get(commonPath + fileName));
+        compile(content, mainClassName + "/" + mainClassName + ".class");
+        // Choose the number you want to run the program with (default 20)
+        String yourNumber = "20";
+        executeWithInput(mainClassName + "/", mainClassName, yourNumber);
     }
 
             /// Extra features tests

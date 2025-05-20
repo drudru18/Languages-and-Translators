@@ -1,0 +1,16 @@
+$ Tests a program that prints a countdown starting from a value, but only prints 1 value out of 2
+$ to show the usage of booleans and of the `!` (not) unary operator
+
+redLight bool = false;
+
+fun main() {
+    startCountdown int = readInt();
+    i int;
+    for (i, 0, startCountdown, 1) {
+        if (!redLight) {
+            writeln(startCountdown - i);
+        }
+        redLight = !redLight;
+    }
+    writeln("FINISH!");
+}

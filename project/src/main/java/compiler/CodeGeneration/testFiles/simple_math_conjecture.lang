@@ -1,0 +1,22 @@
+$ Tests a program that verifies the simple math conjectures which says that whatever natural number
+$ pick, while the number is different of 1, if it's odd multiply it by 3 and add 1 and if it's even
+$ divide it by 2, you will always end up to 1 at some point.
+
+fun main() {
+    $ read input
+    x int = readInt();
+    write(x);
+    $ while not 1
+    while (x != 1) {
+        $ update `x` depending on if it's even or odd
+        if (x % 2 == 0) {
+            x = x / 2;
+        }
+        else {
+            x = x * 3 + 1;
+        }
+        $ write it to stdout
+        write(" -> " + chr(x));
+    }
+    writeln("");
+}
