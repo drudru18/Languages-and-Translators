@@ -1,0 +1,62 @@
+/// if
+if (4 > 3) {
+writeln("Yes");
+}
+
+/// while
+var int = 5;
+while (var >= 0) {
+var = var-1;
+writeln("One more line");
+}
+
+/// for
+var int;
+for (var, 5, 0, -1) {
+writeln("One more line");
+}
+
+/// field expected
+Student rec {
+name string;
+}
+
+fun main() {
+student Student = Student("John");
+writeln(student.Student);
+}
+
+/// expected var name
+final 55 int = 12;
+
+/// expected function name
+fun while(a int, b int) int {
+return a + b;
+}
+
+/// expected parameter name
+fun sum(a int, for int) int {
+return a + int;
+}
+
+/// expected variable name after free
+fun main() {
+arr int[] = array [10] of int;
+arr[6] = 42;
+free main;
+}
+
+/// not closing bracket
+arr int[] = array [5 of int;
+
+/// not closing parenthesis
+fun main() {
+if (6 > 4 {
+writeln("It's bigger");
+}
+}
+
+/// expecting comma after parameter
+fun sum(a int b int) int {
+return a + int;
+}

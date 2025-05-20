@@ -1,3 +1,7 @@
+$ Tests a program that computes averages of students' grades and
+$ prints the names of those whose average is greater or equal than the
+$ minimum required grade.
+
 final minimumGradeToPass float = 5;
 
 FullName rec {
@@ -37,7 +41,7 @@ students[0].grades[1] = 5;
 students[0].grades[2] = 10;
 
 $ Second student
-students[1] = Student(array[3] of int, FullName("Gabriel", "Gabreilly"));
+students[1] = Student(array[3] of int, FullName("Gabriel", "Gabrielly"));
 students[1].grades[0] = 4;
 students[1].grades[1] = 5;
 students[1].grades[2] = 4;

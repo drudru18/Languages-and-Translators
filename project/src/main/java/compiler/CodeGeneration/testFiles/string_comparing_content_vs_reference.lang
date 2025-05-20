@@ -1,0 +1,22 @@
+$ Program that shows the difference between a reference
+$ and content comparison between strings
+
+final s1 string = "message 1";
+
+fun main() {
+s2 string = "message " + "1";
+s3 string = "message 2";
+s4 string = s1;
+
+write("s1 should have different reference compared to s2: ");
+writeln(s1 != s2);
+
+write("s1 should have same reference as to s4: ");
+writeln(s1 == s4);
+
+write("s1 content should be equal to s2 content: ");
+writeln(stringsEqual(s1, s2));
+
+write("s2 content should be different from s3 content: ");
+writeln(!stringsEqual(s2, s3));
+}
